@@ -23,7 +23,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import UpdatePoster from './UpdatePoster';
 import UpdateInfo from './UpdateInfo';
-
+import UpdateOwner from './UpdateOwner'
 
 const OwnerProfile = () => {
 
@@ -59,11 +59,20 @@ const OwnerProfile = () => {
                             <CardContent>
                                 <List sx={{ px: 3 }}>
                                     <Grid container>
-                                        <ListItem disablePadding>
-                                            <ListItemButton>
-                                                <ListItemText primary="Phone" secondary="7894567895" />
-                                            </ListItemButton>
-                                        </ListItem>
+                                        <Grid item xs={6}>
+                                            <ListItem disablePadding>
+                                                <ListItemButton>
+                                                    <ListItemText primary="Name" secondary="Mahesh Gaikwad" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <ListItem disablePadding>
+                                                <ListItemButton>
+                                                    <ListItemText primary="Phone" secondary="7894567895" />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
@@ -95,16 +104,29 @@ const OwnerProfile = () => {
                                     </Grid>
                                 </List>
                             </CardContent>
-                            <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <IconButton aria-label="poster" size="small" onClick={() => setUpdateStatus('poster')}>
-                                    <EditIcon color="primary" /> <Typography sx={{ pl: 1, fontSize: '15px' }}> Poster</Typography>
-                                </IconButton>
-                                <IconButton aria-label="info" onClick={() => setUpdateStatus('info')}>
-                                    <EditIcon color="primary" /> <Typography sx={{ pl: 1, fontSize: '15px' }}> Info</Typography>
-                                </IconButton>
-                                <IconButton aria-label="delete" onClick={() => setDeleteConfirm(true)}>
-                                    <DeleteIcon color="error" /><Typography sx={{ pl: 1, fontSize: '15px' }}> Account</Typography>
-                                </IconButton>
+                            <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly', px: 3 }}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <IconButton aria-label="poster" size="small" onClick={() => setUpdateStatus('poster')}>
+                                            <EditIcon color="primary" /> <Typography sx={{ pl: 1, fontSize: '15px' }}> Poster</Typography>
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <IconButton aria-label="info" onClick={() => setUpdateStatus('info')}>
+                                            <EditIcon color="primary" /> <Typography sx={{ pl: 1, fontSize: '15px' }}> Info</Typography>
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <IconButton aria-label="info" onClick={() => setUpdateStatus('owner')}>
+                                            <EditIcon color="primary" /> <Typography sx={{ pl: 1, fontSize: '15px' }}> Personal</Typography>
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <IconButton aria-label="delete" onClick={() => setDeleteConfirm(true)}>
+                                            <DeleteIcon color="error" /><Typography sx={{ pl: 1, fontSize: '15px' }}> Account</Typography>
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -117,6 +139,10 @@ const OwnerProfile = () => {
 
                         {
                             updateStatus === 'poster' && <UpdatePoster />
+                        }
+
+                        {
+                            updateStatus === 'owner' && <UpdateOwner />
                         }
 
                     </Grid>

@@ -20,9 +20,9 @@ const UpdateInfo = () => {
         <>
             <Box sx={{ py: 1, px: 4 }}>
                 <Typography sx={{ textAlign: 'center', fontSize: '30px', letterSpacing: '3px', py: 2 }}>Update Informations</Typography>
-                <TextField sx={{ my: 1 }} id="name" fullWidth label="Name" variant="outlined" />
-                <TextField sx={{ my: 1 }} id="address" fullWidth label="Address" variant="outlined" />
-                <TextField sx={{ my: 1 }} id="phone" type="number" fullWidth label="Price" variant="outlined" />
+                <TextField sx={{ my: 1 }} id="name" fullWidth label="Mess Name" variant="outlined" />
+                <TextField sx={{ my: 1 }} id="address" fullWidth label="Mess Address" variant="outlined" />
+                <TextField sx={{ my: 1 }} id="phone" type="number" fullWidth label="Thali Price" variant="outlined" />
                 <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 1 }}>
                     <FormControlLabel control={<Switch defaultChecked />} label="Non Veg" />
                     <FormControlLabel control={<Switch />} label="Parcel" />
