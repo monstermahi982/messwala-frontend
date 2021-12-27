@@ -36,7 +36,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import CheckIcon from '@mui/icons-material/Check';
-
+import PersonIcon from '@mui/icons-material/Person';
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -161,7 +161,7 @@ const Menu = () => {
                     <Image
                         alt="Picture of the author"
                         width="1000"
-                        height={500}
+                        height={600}
                         src={MessImage.src} sx={{ p: 2 }}
                         onClick={handleClickOpen}
                     />
@@ -180,7 +180,7 @@ const Menu = () => {
                                 }
                                 sx={{ textAlign: 'center' }}
                                 title="Sunny Mess"
-                                subheader="lorefidjf sdf sdfhnauicvf"
+                                subheader="Near Law College, ambegoan budruk, pune"
                             />
                             <CardContent>
                                 <List>
@@ -188,10 +188,21 @@ const Menu = () => {
                                         <Grid item xs={12} sm={12} md={12}>
                                             <ListItemButton>
                                                 <ListItemIcon>
+                                                    <PersonIcon color="primary" />
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary="Owner Name"
+                                                    secondary="Mahesh Gaikwad"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                        <Grid item xs={12} sm={12} md={12}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
                                                     <LocalPhoneIcon color="primary" />
                                                 </ListItemIcon>
                                                 <ListItemText
-                                                    primary="Phone no."
+                                                    primary="Phone Number"
                                                     secondary="1231231234"
                                                 />
                                             </ListItemButton>
