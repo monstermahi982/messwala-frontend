@@ -110,12 +110,16 @@ const Register = () => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
+                                <Link href="/auth/owner-login" variant="body2">
+                                    {"Mess Owner"}
+                                </Link>
                             </Grid>
                             <Grid item sx={{ pb: 1 }}>
                                 <Link href="/" variant="body2">
                                     {"Already have an account? Login"}
                                 </Link>
                             </Grid>
+                            <a href="tel:+1800229933">dasdasd</a>
                         </Grid>
                     </Box>
                 </Box>
