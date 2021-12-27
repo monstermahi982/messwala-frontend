@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
-
+import Count from '../components/Count'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -164,6 +164,7 @@ export default function Home() {
           <Pagination count={PageCount} page={page} onChange={handlePageChange} color="primary" size="large" />
         </Stack>
       }
+      <Count />
 
     </>
   )
