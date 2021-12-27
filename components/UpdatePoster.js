@@ -6,7 +6,7 @@ import { Avatar, CardHeader, IconButton, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import poster from '../public/menuImage.jpeg'
+import messposter from '../public/menuImage.jpeg'
 
 
 
@@ -14,6 +14,7 @@ const Input = styled('input')({
     display: 'none',
 });
 const UpdatePoster = () => {
+    const [poster, setPoster] = React.useState(messposter)
     const uploadImage = (event) => {
         console.log(event.target.files[0]);
         setPoster(URL.createObjectURL(event.target.files[0]));
@@ -25,14 +26,14 @@ const UpdatePoster = () => {
                 <Stack direction="row" alignItems="center" spacing={2} sx={{ display: 'flex', justifyContent: 'space-evenly', my: 3 }}>
                     <label htmlFor="contained-button-file">
                         <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                        <Button variant="contained" component="span">
+                        <Button variant="contained" color="secondary" component="span">
                             Upload
                         </Button>
                     </label>
                     <label htmlFor="icon-button-file">
                         <Input accept="image/*" id="icon-button-file" type="file" onChange={(e) => uploadImage(e)} />
                         <IconButton color="primary" aria-label="upload picture" component="span">
-                            <PhotoCamera />
+                            <PhotoCamera color="secondary" />
                         </IconButton>
                     </label>
                 </Stack>
