@@ -37,6 +37,8 @@ import ListItemText from '@mui/material/ListItemText';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import CheckIcon from '@mui/icons-material/Check';
 import PersonIcon from '@mui/icons-material/Person';
+import Joi from 'joi'
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -73,6 +75,22 @@ const Menu = () => {
 
     // handling comment logic
     const handleComment = () => {
+
+        const commentError = Joi.object({
+            comment: Joi.string().min(10).max(100).required()
+        })
+
+        const { error } = commentError.validate({ comment });
+
+        if (error) {
+            setSnackAlert({
+                type: 'error',
+                message: error.message
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            return
+        }
 
         setLoad(true)
         if (comment.length < 10) {
@@ -273,6 +291,7 @@ const Menu = () => {
                                     label="Comments"
                                     value={comment}
                                     multiline
+
                                     onChange={(e) => setComment(e.target.value)}
                                     InputProps={{
                                         startAdornment: (
