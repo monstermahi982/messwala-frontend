@@ -119,7 +119,6 @@ const Register = () => {
                                     {"Already have an account? Login"}
                                 </Link>
                             </Grid>
-                            <a href="tel:+1800229933">dasdasd</a>
                         </Grid>
                     </Box>
                 </Box>
