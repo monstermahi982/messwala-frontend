@@ -6,7 +6,6 @@ import { Avatar, CardHeader, IconButton, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import messposter from '../public/menuImage.jpeg'
 
 
 
@@ -14,7 +13,7 @@ const Input = styled('input')({
     display: 'none',
 });
 const UpdatePoster = () => {
-    const [poster, setPoster] = React.useState(messposter)
+    const [poster, setPoster] = React.useState("https://source.unsplash.com/1600x900/?food,maggi")
     const uploadImage = (event) => {
         console.log(event.target.files[0]);
         setPoster(URL.createObjectURL(event.target.files[0]));
