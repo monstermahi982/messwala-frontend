@@ -12,7 +12,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '@mui/icons-material/Google';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Joi from 'joi'
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const theme = createTheme();
 
 const Register = () => {
@@ -21,6 +27,8 @@ const Register = () => {
     const [email, setEmail] = React.useState();
     const [phone, setPhone] = React.useState();
     const [data, setData] = React.useState(false);
+    const [error, setError] = React.useState('');
+    const [open, setOpen] = React.useState(false);
 
     const responseGoogle = (response) => {
         console.log(response.profileObj);
@@ -29,8 +37,33 @@ const Register = () => {
         setData(true);
     }
 
+    const addUser = () => {
+        const register = Joi.object({
+            email: Joi.string().email({ tlds: { allow: false } }).required(),
+            name: Joi.string().min(5).max(15).required(),
+            phone: Joi.string().length(10).pattern(/^[0-9]+$/).required()
+        })
+
+        const { error } = register.validate({ name, email, phone });
+        if (error) {
+            setError(error.message);
+            setOpen(true);
+        }
+
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     return (
         <ThemeProvider theme={theme}>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>{error}</Alert>
+            </Snackbar>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -50,6 +83,7 @@ const Register = () => {
 
                     <Box sx={{ my: 2 }}>
                         <GoogleLogin
+                            disabled={email ? true : false}
                             clientId="716248828673-kjpok8rlfaqv95m46vpjuk55hc6tpjso.apps.googleusercontent.com"
                             render={renderProps => (
                                 <Button variant="contained" color="primary" startIcon={<GoogleIcon color="error" />} onClick={renderProps.onClick} disabled={renderProps.disabled}>register with Google</Button>
@@ -73,6 +107,7 @@ const Register = () => {
                             autoFocus
                             value={email}
                             disabled
+
                         />
                         <TextField
                             margin="normal"
@@ -99,12 +134,14 @@ const Register = () => {
                             autoComplete="phone"
                             autoFocus
                             disabled={data ? false : true}
+                            type="number"
                         />
                         <Button
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             disabled={data ? false : true}
+                            onClick={addUser}
                         >
                             Sign In
                         </Button>
