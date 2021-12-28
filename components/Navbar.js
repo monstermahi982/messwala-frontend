@@ -20,7 +20,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 1, mb: 8 }}>
                 <AppBar position="fixed">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <Link href="/" passHref><Typography sx={{ cursor: 'pointer' }} variant="h6" component="div">
+                        <Link href="/" passHref><Typography sx={{ cursor: 'pointer', fontWeight: '800', fontSize: '20px', letterSpacing: '2px' }} variant="h6" component="div">
                             Mess Wala
                         </Typography></Link>
                         <Box>
