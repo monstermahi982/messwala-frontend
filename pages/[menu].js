@@ -76,6 +76,7 @@ const Menu = () => {
     // handling comment logic
     const handleComment = () => {
 
+        setLoad(true)
         const commentError = Joi.object({
             comment: Joi.string().min(10).max(100).required()
         })
@@ -92,16 +93,6 @@ const Menu = () => {
             return
         }
 
-        setLoad(true)
-        if (comment.length < 10) {
-            setSnackAlert({
-                type: 'error',
-                message: 'Please more response'
-            })
-            setsnackStatus(true)
-            setLoad(false)
-            return
-        }
         commentData.push({
             name: 'bot comment',
             comment: comment
