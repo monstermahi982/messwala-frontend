@@ -73,6 +73,12 @@ const Menu = () => {
     const [load, setLoad] = React.useState(false);
     const [actionLoad, setActionLoad] = React.useState(false);
 
+
+    // computing power saver logic
+    const [cacheAction, setCacheAction] = React.useState(false);
+    const [cacheComment, setCacheComment] = React.useState(false);
+
+
     // handling comment logic
     const handleComment = () => {
 
@@ -93,6 +99,27 @@ const Menu = () => {
             return
         }
 
+
+        if (cacheComment) {
+
+            commentData.push({
+                name: 'bot comment',
+                comment: comment
+            })
+            setComment('');
+            setSnackAlert({
+                type: 'success',
+                message: 'Thank you for your Feedback'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            return;
+
+        }
+
+
+        // axios code
+
         commentData.push({
             name: 'bot comment',
             comment: comment
@@ -104,6 +131,8 @@ const Menu = () => {
         })
         setsnackStatus(true)
         setLoad(false)
+        setCacheComment(true);
+
     }
 
     // handling alert code
@@ -116,7 +145,20 @@ const Menu = () => {
 
     // handling like code
     const handleLike = () => {
+
+        if (cacheAction) {
+            setLike(like + 1);
+            setSnackAlert({
+                type: 'success',
+                message: 'We are happy that you like our food'
+            })
+            setsnackStatus(true)
+            return;
+        }
         setActionLoad(true)
+
+        //axios code
+
         setLike(like + 1);
         setSnackAlert({
             type: 'success',
@@ -124,12 +166,25 @@ const Menu = () => {
         })
         setsnackStatus(true)
         setActionLoad(false)
-
+        setCacheAction(true)
     }
 
     // handling dislike code
     const handleDislike = () => {
+
+        if (cacheAction) {
+            setDisLike(dislike + 1);
+            setSnackAlert({
+                type: 'error',
+                message: 'We will try to me it more delicious'
+            })
+            setsnackStatus(true)
+            return;
+        }
         setActionLoad(true)
+
+        //axios code
+
         setDisLike(dislike + 1);
         setSnackAlert({
             type: 'error',
@@ -137,6 +192,7 @@ const Menu = () => {
         })
         setsnackStatus(true)
         setActionLoad(false)
+        setCacheAction(true)
     }
 
     // handling dailog logic
