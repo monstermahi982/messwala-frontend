@@ -10,6 +10,7 @@ import PollIcon from '@mui/icons-material/Poll';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Footer from '../components/Footer';
+import { useRouter } from 'next/router'
 
 const actions = [
   { icon: <AccountCircleIcon />, name: 'Profile' },
@@ -19,6 +20,57 @@ const actions = [
 ];
 
 function MyApp({ Component, pageProps }) {
+
+  const router = useRouter()
+  if (router.pathname === '/auth/register') {
+    return (
+      <>
+        <Component {...pageProps} />
+        <Box sx={{ position: 'fixed', bottom: 10, right: 10, height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
+          <SpeedDial
+            ariaLabel="SpeedDial openIcon example"
+            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            icon={<MenuIcon />}
+          >
+            {/* openIcon={<CloseIcon />} */}
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              />
+            ))}
+          </SpeedDial>
+        </Box>
+        <Footer />
+      </>
+    )
+  }
+  if (router.pathname === '/auth/owner-login') {
+    return (
+      <>
+        <Component {...pageProps} />
+        <Box sx={{ position: 'fixed', bottom: 10, right: 10, height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
+          <SpeedDial
+            ariaLabel="SpeedDial openIcon example"
+            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            icon={<MenuIcon />}
+          >
+            {/* openIcon={<CloseIcon />} */}
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              />
+            ))}
+          </SpeedDial>
+        </Box>
+        <Footer />
+      </>
+    )
+  }
+
   return (
     <>
       <Navbar />
