@@ -57,9 +57,12 @@ const OwnerLogin = () => {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs" sx={{ minHeight: '100vh' }}>
                 <CssBaseline />
+                <Link passHref href="/">
+                    <Typography align="center" sx={{ letterSpacing: '2px', fontSize: '50px', fontWeight: 700, cursor: 'pointer' }}>Mess Wala</Typography>
+                </Link>
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 3,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',

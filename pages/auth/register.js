@@ -64,11 +64,15 @@ const Register = () => {
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>{error}</Alert>
             </Snackbar>
+
             <Container component="main" maxWidth="xs">
+                <Link passHref href="/">
+                    <Typography align="center" sx={{ letterSpacing: '2px', fontSize: '50px', fontWeight: 700, cursor: 'pointer' }}>Mess Wala</Typography>
+                </Link>
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 2,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
