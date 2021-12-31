@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -208,213 +209,220 @@ const Menu = () => {
 
 
     return (
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-            {/* display alert code */}
-            <Snackbar
-                open={snackStatus}
-                autoHideDuration={6000}
-                onClose={handleAlertAlertClose}
-                message="Note archived"
-            >
-                <Alert onClose={handleAlertAlertClose} severity={snackAlert.type} sx={{ width: '100%' }}>
-                    {snackAlert.message}
-                </Alert>
-            </Snackbar>
+        <>
+            <Head>
+                <title>Mess Wala :- Sunny Mess</title>
+                <meta name="description" content="Sunny Mess" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <Box sx={{ flexGrow: 1, p: 3 }}>
+                {/* display alert code */}
+                <Snackbar
+                    open={snackStatus}
+                    autoHideDuration={6000}
+                    onClose={handleAlertAlertClose}
+                    message="Note archived"
+                >
+                    <Alert onClose={handleAlertAlertClose} severity={snackAlert.type} sx={{ width: '100%' }}>
+                        {snackAlert.message}
+                    </Alert>
+                </Snackbar>
 
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={8}>
-                    <Image
-                        alt="Picture of the author"
-                        width="1000"
-                        height={600}
-                        src={MessImage.src} sx={{ p: 2 }}
-                        onClick={handleClickOpen}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Badge badgeContent={4} color="primary" anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}>
-                        <Card sx={{ p: 3 }}>
-                            <CardHeader
-                                avatar={
-                                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                        60
-                                    </Avatar>
-                                }
-                                sx={{ textAlign: 'center' }}
-                                title="Sunny Mess"
-                                subheader="Near Law College, ambegoan budruk, pune"
-                            />
-                            <CardContent>
-                                <List>
-                                    <Grid container>
-                                        <Grid item xs={12} sm={12} md={12}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <PersonIcon color="primary" />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary="Owner Name"
-                                                    secondary="Mahesh Gaikwad"
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={12}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <LocalPhoneIcon color="primary" />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary="Phone Number"
-                                                    secondary="1231231234"
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <CloseIcon color="error" />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary="Non Veg"
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <CheckIcon color="success" />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary="Parcel"
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6}>
-                                            <ListItemButton>
-                                                <ListItemText
-                                                    primary="Lunch Time"
-                                                    secondary='12pm to 3pm'
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6}>
-                                            <ListItemButton>
-                                                <ListItemText
-                                                    primary="Dinner Time"
-                                                    secondary='7pm to 10pm'
-                                                />
-                                            </ListItemButton>
-                                        </Grid>
-                                    </Grid>
-                                </List>
-                            </CardContent>
-                            <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                {
-                                    actionLoad ?
-                                        <Box sx={{ width: '100%' }}>
-                                            <LinearProgress />
-                                        </Box>
-                                        :
-                                        <>
-                                            <IconButton aria-label="share" onClick={handleLike}>
-                                                <MoodIcon sx={{ color: 'green' }} />
-                                                <Typography sx={{ fontWeight: 'light', mx: 1 }}>{like}</Typography>
-                                            </IconButton>
-                                            <IconButton aria-label="add to favorites" onClick={handleDislike}>
-                                                <MoodBadIcon sx={{ color: 'red' }} />
-                                                <Typography sx={{ fontWeight: 'light', mx: 1 }}>{dislike}</Typography>
-                                            </IconButton>
-                                        </>
-                                }
-
-                            </CardActions>
-
-                            <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 2 }}>
-                                <TextField
-                                    id="input-with-icon-textfield"
-                                    label="Comments"
-                                    value={comment}
-                                    multiline
-
-                                    onChange={(e) => setComment(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <CommentIcon />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    variant="standard"
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={8}>
+                        <Image
+                            alt="Picture of the author"
+                            width="1000"
+                            height={600}
+                            src={MessImage.src} sx={{ p: 2 }}
+                            onClick={handleClickOpen}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Badge badgeContent={4} color="primary" anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}>
+                            <Card sx={{ p: 3 }}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                            60
+                                        </Avatar>
+                                    }
+                                    sx={{ textAlign: 'center' }}
+                                    title="Sunny Mess"
+                                    subheader="Near Law College, ambegoan budruk, pune"
                                 />
-                                {
-                                    load ?
-                                        <CircularProgress />
-                                        :
-                                        <Button variant="contained" size="small" onClick={handleComment}>add</Button>
-                                }
-
-                                <ExpandMore
-                                    expand={expanded}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
-                            </Box>
-
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
-
+                                    <List>
+                                        <Grid container>
+                                            <Grid item xs={12} sm={12} md={12}>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        <PersonIcon color="primary" />
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary="Owner Name"
+                                                        secondary="Mahesh Gaikwad"
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={12}>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        <LocalPhoneIcon color="primary" />
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary="Phone Number"
+                                                        secondary="1231231234"
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6}>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        <CloseIcon color="error" />
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary="Non Veg"
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6}>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        <CheckIcon color="success" />
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary="Parcel"
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6}>
+                                                <ListItemButton>
+                                                    <ListItemText
+                                                        primary="Lunch Time"
+                                                        secondary='12pm to 3pm'
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6}>
+                                                <ListItemButton>
+                                                    <ListItemText
+                                                        primary="Dinner Time"
+                                                        secondary='7pm to 10pm'
+                                                    />
+                                                </ListItemButton>
+                                            </Grid>
+                                        </Grid>
+                                    </List>
+                                </CardContent>
+                                <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                                     {
-                                        commentData.map((value, index) => (
+                                        actionLoad ?
+                                            <Box sx={{ width: '100%' }}>
+                                                <LinearProgress />
+                                            </Box>
+                                            :
                                             <>
-                                                <MenuComment data={value} key={index} />
+                                                <IconButton aria-label="share" onClick={handleLike}>
+                                                    <MoodIcon sx={{ color: 'green' }} />
+                                                    <Typography sx={{ fontWeight: 'light', mx: 1 }}>{like}</Typography>
+                                                </IconButton>
+                                                <IconButton aria-label="add to favorites" onClick={handleDislike}>
+                                                    <MoodBadIcon sx={{ color: 'red' }} />
+                                                    <Typography sx={{ fontWeight: 'light', mx: 1 }}>{dislike}</Typography>
+                                                </IconButton>
                                             </>
-                                        ))
                                     }
 
+                                </CardActions>
 
-                                </CardContent>
-                            </Collapse>
-                        </Card>
-                    </Badge>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 2 }}>
+                                    <TextField
+                                        id="input-with-icon-textfield"
+                                        label="Comments"
+                                        value={comment}
+                                        multiline
+
+                                        onChange={(e) => setComment(e.target.value)}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <CommentIcon />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        variant="standard"
+                                    />
+                                    {
+                                        load ?
+                                            <CircularProgress />
+                                            :
+                                            <Button variant="contained" size="small" onClick={handleComment}>add</Button>
+                                    }
+
+                                    <ExpandMore
+                                        expand={expanded}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more"
+                                    >
+                                        <ExpandMoreIcon />
+                                    </ExpandMore>
+                                </Box>
+
+                                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                    <CardContent>
+
+                                        {
+                                            commentData.map((value, index) => (
+                                                <>
+                                                    <MenuComment data={value} key={index} />
+                                                </>
+                                            ))
+                                        }
+
+
+                                    </CardContent>
+                                </Collapse>
+                            </Card>
+                        </Badge>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Dialog
-                fullScreen
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Transition}
-            >
-                <Box sx={{ position: 'absolute', top: 10, right: 10, zIndex: 1 }}>
-                    <IconButton
-                        onClick={handleClose}
-                        aria-label="close"
-                        size="large"
-                        variant="outlined"
-                        color="primary"
+                <Dialog
+                    fullScreen
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Transition}
+                >
+                    <Box sx={{ position: 'absolute', top: 10, right: 10, zIndex: 1 }}>
+                        <IconButton
+                            onClick={handleClose}
+                            aria-label="close"
+                            size="large"
+                            variant="outlined"
+                            color="primary"
 
-                    >
-                        <CloseIcon sx={{ fontSize: 40 }} />
-                    </IconButton>
+                        >
+                            <CloseIcon sx={{ fontSize: 40 }} />
+                        </IconButton>
 
-                </Box>
-                <Image
-                    src={MessImage.src}
-                    sx={{ p: 5 }}
-                    alt="Picture of the author"
-                    width="100%"
-                    height={500}
-                    onClick={handleClickOpen}
-                />
+                    </Box>
+                    <Image
+                        src={MessImage.src}
+                        sx={{ p: 5 }}
+                        alt="Picture of the author"
+                        width="100%"
+                        height={500}
+                        onClick={handleClickOpen}
+                    />
 
-            </Dialog>
-        </Box>
+                </Dialog>
+            </Box>
+        </>
     )
 }
 
