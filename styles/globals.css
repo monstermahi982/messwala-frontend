@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.MuiCardHeader-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.MuiCardHeader-subheader {
+  font-size: 12px;
+}
