@@ -70,9 +70,9 @@ const ItemCard = ({ data }) => {
                                 {data.price}
                             </Avatar>
                         }
-                        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h6.fontSize' }}
+                        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h1.fontSize', textTransform: 'capitalize' }}
                         title={data.name}
-                        subheader={data.address.slice(0, 20) + '...'}
+                        subheader={data.address.slice(0, 30) + '...'}
                     />
                     <CardMedia
                         component="img"
