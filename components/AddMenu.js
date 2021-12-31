@@ -17,7 +17,12 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import Image from 'next/image'
 import menuItem from '../Controllers/menuItem'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const theme = createTheme();
@@ -30,10 +35,31 @@ const AddMenu = () => {
     const [data, setData] = React.useState(false);
     const [image, setImage] = React.useState('');
     const [item, setItem] = React.useState([])
+    const [alert, setAlert] = React.useState(true)
+    const [alertMess, setAlertMess] = React.useState({})
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setAlert(false);
+    };
 
     const uploadImage = (event) => {
-        // console.log(event.target.files[0]);
+
+        if (event.target.files[0] === undefined) {
+            setAlertMess({ "message": "image not found", "status": "error" })
+            setAlert(true);
+            return;
+        }
+        if (event.target.files[0].size > 10000000) {
+            setAlertMess({ "message": "image size limit exceed", "status": "error" })
+            setAlert(true);
+            return;
+        }
         setImage(URL.createObjectURL(event.target.files[0]));
+        setAlertMess({ "message": "Image Uploaded", "status": "success" })
+        setAlert(true);
     }
 
     React.useEffect(() => {
@@ -45,13 +71,23 @@ const AddMenu = () => {
     }, [image, item])
 
 
-    const submitMenu = () => {
-        // console.log(item);
+    const submitMenu = async () => {
+        const formData = new FormData();
+        formData.append('image', image)
+        formData.append('items', item)
+        console.log(formData);
+        setAlertMess({ "message": "Menu Uploaded", "status": "success" })
+        setAlert(true);
     }
 
 
     return (
         <ThemeProvider theme={theme}>
+            <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={alertMess.status} sx={{ width: '100%' }}>
+                    {alertMess.message}
+                </Alert>
+            </Snackbar>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
