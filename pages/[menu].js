@@ -39,7 +39,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import CheckIcon from '@mui/icons-material/Check';
 import PersonIcon from '@mui/icons-material/Person';
 import Joi from 'joi'
-import { ObjectId } from 'mongoose'
+import mongoose from 'mongoose'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -428,3 +428,20 @@ const Menu = () => {
 }
 
 export default Menu;
+
+
+export async function getServerSideProps(context) {
+    console.log(context.query.menu);
+    const isValid = mongoose.Types.ObjectId.isValid(context.query.menu);
+    if (!isValid) {
+        return {
+            redirect: {
+                destination: '/invalid-mess',
+                permanent: false,
+            },
+        }
+    }
+    return {
+        props: {},
+    }
+}
