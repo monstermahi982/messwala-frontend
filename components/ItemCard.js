@@ -18,7 +18,8 @@ import MuiAlert from '@mui/material/Alert';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, TwitterIcon, TwitterShareButton } from 'react-share'
-
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import Box from '@mui/material/Box';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -93,17 +94,21 @@ const ItemCard = ({ data }) => {
                         </Stack>
                     </CardContent>
                     <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                        <Box sx={{ display: 'flex' }}>
+                            <InsertEmoticonIcon sx={{ color: 'green' }} />
+                            <Typography sx={{ fontWeight: 'light', fontSize: '15px', mx: 1 }}>23</Typography>
+                        </Box>
                         <TwitterShareButton url={"https://messwala.com/sunnymess"} title={"Checkout latest menu of Sunny Mess"} hashtags={['messwala, sunnymess']}>
-                            <TwitterIcon size={25} round={true} />
+                            <TwitterIcon size={20} round={true} />
                         </TwitterShareButton>
                         <TelegramShareButton url={"https://messwala.com/sunnymess"} title={"Checkout latest menu of Sunny Mess"}>
-                            <TelegramIcon size={25} round={true} />
+                            <TelegramIcon size={20} round={true} />
                         </TelegramShareButton>
                         <WhatsappShareButton url={"https://messwala.com/sunnymess"} title={"Checkout latest menu of Sunny Mess"} >
-                            <WhatsappIcon size={25} round={true} />
+                            <WhatsappIcon size={20} round={true} />
                         </WhatsappShareButton>
                         <IconButton aria-label="like" onClick={handleLoad}>
-                            <Link href={`/${data.id}`} passHref><MenuBookIcon sx={{ color: 'blue' }} /></Link>
+                            <Link href={`/${data.id}`} passHref><MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} /></Link>
                         </IconButton>
                     </CardActions>
                 </Card>
