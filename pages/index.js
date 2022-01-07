@@ -33,7 +33,7 @@ function valuetext(value) {
 export default function Home() {
   const [value, setValue] = React.useState([40, 60]);
   const [item, setItem] = React.useState([])
-  const PageCount = Math.ceil(ItemData.length / 10);
+  const PageCount = Math.ceil(ItemData.length / 5);
   const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState([])
   const [filter, setFilter] = React.useState();
@@ -43,12 +43,12 @@ export default function Home() {
   };
 
   const PageMenu = async () => {
-    if (page * 10 - 1 > ItemData.length) {
+    if (page * 5 - 1 > ItemData.length) {
       ;
-      setData(ItemData.slice(page * 10 - 10, ItemData.length - 1))
+      setData(ItemData.slice(page * 5 - 5, ItemData.length - 1))
 
     } else {
-      setData(ItemData.slice(page * 10 - 10, page * 10 - 1))
+      setData(ItemData.slice(page * 5 - 5, page * 5 - 1))
     }
   }
 
