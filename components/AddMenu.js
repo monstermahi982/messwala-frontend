@@ -35,7 +35,7 @@ const AddMenu = () => {
     const [data, setData] = React.useState(false);
     const [image, setImage] = React.useState('');
     const [item, setItem] = React.useState([])
-    const [alert, setAlert] = React.useState(true)
+    const [alert, setAlert] = React.useState(false)
     const [alertMess, setAlertMess] = React.useState({})
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -78,6 +78,8 @@ const AddMenu = () => {
         console.log(formData);
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
+        setImage('');
+        setItem([]);
     }
 
 
