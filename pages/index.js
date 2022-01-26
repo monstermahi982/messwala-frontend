@@ -19,6 +19,8 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import Count from '../components/Count'
+import axios from 'axios'
+import { URL } from '../config'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -30,25 +32,26 @@ function valuetext(value) {
 
 
 
-export default function Home() {
+export default function Home({ messDataItem }) {
   const [value, setValue] = React.useState([40, 60]);
   const [item, setItem] = React.useState([])
-  const PageCount = Math.ceil(ItemData.length / 5);
+  const PageCount = Math.ceil(messDataItem.length / 5);
   const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState([])
   const [filter, setFilter] = React.useState();
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // console.log(messDataItem);
+
   const PageMenu = async () => {
-    if (page * 5 - 1 > ItemData.length) {
+    if (page * 6 - 1 > messDataItem.length) {
       ;
-      setData(ItemData.slice(page * 5 - 5, ItemData.length - 1))
+      setData(messDataItem.slice(page * 6 - 6, messDataItem.length - 1))
 
     } else {
-      setData(ItemData.slice(page * 5 - 5, page * 5 - 1))
+      setData(messDataItem.slice(page * 6 - 6, page * 6 - 1))
     }
   }
 
@@ -139,7 +142,7 @@ export default function Home() {
 
           filter ?
 
-            ItemData.filter(messData => messData.name.includes(filter)).map((value, index) => (
+            messDataItem.filter(messData => messData.mess_name.includes(filter)).map((value, index) => (
               <Grid item xs={12} sm={4} md={3} key={index}>
                 <ItemCard data={value} />
               </Grid>
@@ -171,3 +174,9 @@ export default function Home() {
 }
 
 
+export async function getServerSideProps(context) {
+  const data = await axios.get(`${URL}mess`);
+  return {
+    props: { messDataItem: data.data }
+  }
+}
