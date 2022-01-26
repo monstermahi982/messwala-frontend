@@ -15,6 +15,8 @@ import AddMenu from '../components/AddMenu'
 import OwnerProfile from '../components/OwnerProfile'
 import Polls from '../components/Polls'
 import Statics from '../components/Statics'
+import axios from 'axios'
+import { getCookie, checkCookies } from 'cookies-next'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -50,7 +52,7 @@ function a11yProps(index) {
     };
 }
 
-const Dashboard = () => {
+const Dashboard = ({ item_list, statics, owner_deatils }) => {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
@@ -84,16 +86,16 @@ const Dashboard = () => {
                     onChangeIndex={handleChangeIndex}
                 >
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <AddMenu />
+                        <AddMenu item_list={item_list} />
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
                         <Polls />
                     </TabPanel>
                     <TabPanel value={value} index={2} dir={theme.direction}>
-                        <OwnerProfile />
+                        <OwnerProfile data={owner_deatils} />
                     </TabPanel>
                     <TabPanel value={value} index={3} dir={theme.direction}>
-                        <Statics />
+                        <Statics data={statics} />
                     </TabPanel>
                 </SwipeableViews>
             </Box>
@@ -103,3 +105,36 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+export async function getServerSideProps({ req, res }) {
+    const token = checkCookies('auth', { req, res });
+    if (!token) {
+        return {
+            redirect: {
+                destination: '/auth/owner-login',
+                permanent: false,
+            },
+        }
+    }
+
+    const id = getCookie('id', { req, res });
+
+    // dish item deatils
+    const data = await axios.get(`${process.env.URL}item`);
+
+    // mess statics
+    const statics = await axios.get(`${process.env.URL}static/mess/${id}`);
+    console.log(statics.data);
+
+    // owner deatils
+    const owner_deatils = await axios.get(`${process.env.URL}mess/info/${id}`);
+    console.log(owner_deatils.data);
+
+    return {
+        props: {
+            item_list: data.data,
+            statics: statics.data,
+            owner_deatils: owner_deatils.data
+        }
+    }
+}
