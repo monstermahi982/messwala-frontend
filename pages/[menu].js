@@ -15,14 +15,13 @@ import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import MessImage from '../public/menuImage.jpeg'
+import MessImage from '../public/mess2.jpeg'
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import CommentIcon from '@mui/icons-material/Comment';
-import commentData from '../Controllers/commentData'
 import MenuComment from '../components/MenuComment'
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import MoodIcon from '@mui/icons-material/Mood';
@@ -40,6 +39,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import PersonIcon from '@mui/icons-material/Person';
 import Joi from 'joi'
 import mongoose from 'mongoose'
+import axios from 'axios'
+import { URL } from '../config'
+import { checkCookies, getCookie } from 'cookies-next';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -60,29 +62,52 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Menu = () => {
 
 
+const Menu = ({ messInfo }) => {
     const router = useRouter()
     const { menu } = router.query
     const [expanded, setExpanded] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [comment, setComment] = React.useState('');
+    const [commentData, setCommentData] = React.useState(messInfo.comment);
     const [snackStatus, setsnackStatus] = React.useState(false);
     const [snackAlert, setSnackAlert] = React.useState({});
-    const [like, setLike] = React.useState(14);
-    const [dislike, setDisLike] = React.useState(6);
+    const [like, setLike] = React.useState(messInfo.like_count);
+    const [dislike, setDisLike] = React.useState(messInfo.dislike_count);
     const [load, setLoad] = React.useState(false);
     const [actionLoad, setActionLoad] = React.useState(false);
-
+    const ApiURL = process.env.NEXT_PUBLIC_URL;
 
     // computing power saver logic
     const [cacheAction, setCacheAction] = React.useState(false);
     const [cacheComment, setCacheComment] = React.useState(false);
 
+    // handling alert code
+    const handleAlertAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setsnackStatus(false);
+    };
+    // handling dailog logic
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
+    // token auth
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth')}` }
+    };
 
     // handling comment logic
-    const handleComment = () => {
+    const handleComment = async () => {
 
         setLoad(true)
         const commentError = Joi.object({
@@ -101,11 +126,29 @@ const Menu = () => {
             return
         }
 
+        // checking token
+        let token;
+        try {
+            token = checkCookies('auth');
+            if (!token) {
+                setSnackAlert({
+                    type: 'error',
+                    message: "please login first"
+                })
+                setsnackStatus(true)
+                setLoad(false)
+                return
+            }
+
+        } catch (error) {
+            alert()
+            return
+        }
 
         if (cacheComment) {
 
             commentData.push({
-                name: 'bot comment',
+                name: sessionStorage.getItem('name'),
                 comment: comment
             })
             setComment('');
@@ -119,11 +162,12 @@ const Menu = () => {
 
         }
 
-
         // axios code
+        const data = await axios.post(`${ApiURL}comment`, { "mess_id": messInfo._id, comment }, config);
+        console.log(data.data);
 
         commentData.push({
-            name: 'bot comment',
+            name: sessionStorage.getItem('name'),
             comment: comment
         })
         setComment('');
@@ -137,16 +181,28 @@ const Menu = () => {
 
     }
 
-    // handling alert code
-    const handleAlertAlertClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setsnackStatus(false);
-    };
 
     // handling like code
-    const handleLike = () => {
+    const handleLike = async () => {
+
+        // checking token
+        let token;
+        try {
+            token = checkCookies('auth');
+            if (!token) {
+                setSnackAlert({
+                    type: 'error',
+                    message: "please login first"
+                })
+                setsnackStatus(true)
+                setLoad(false)
+                return
+            }
+
+        } catch (error) {
+            alert()
+            return
+        }
 
         if (cacheAction) {
             setLike(like + 1);
@@ -160,6 +216,12 @@ const Menu = () => {
         setActionLoad(true)
 
         //axios code
+        if (!token) {
+            console.log('token not added');
+            return;
+        }
+        const data = await axios.post(`${ApiURL}action/like`, { "mess_id": messInfo._id }, config);
+        console.log(data);
 
         setLike(like + 1);
         setSnackAlert({
@@ -172,13 +234,32 @@ const Menu = () => {
     }
 
     // handling dislike code
-    const handleDislike = () => {
+    const handleDislike = async () => {
+
+        // checking token
+        let token;
+        try {
+            token = checkCookies('auth');
+            if (!token) {
+                setSnackAlert({
+                    type: 'error',
+                    message: "please login first"
+                })
+                setsnackStatus(true)
+                setLoad(false)
+                return
+            }
+
+        } catch (error) {
+            alert()
+            return
+        }
 
         if (cacheAction) {
             setDisLike(dislike + 1);
             setSnackAlert({
                 type: 'error',
-                message: 'We will try to me it more delicious'
+                message: 'We will try to make it more delicious'
             })
             setsnackStatus(true)
             return;
@@ -186,6 +267,12 @@ const Menu = () => {
         setActionLoad(true)
 
         //axios code
+        if (!token) {
+            console.log('token not added');
+            return;
+        }
+        const data = await axios.post(`${ApiURL}action/dislike`, { "mess_id": messInfo._id }, config);
+        console.log(data.data);
 
         setDisLike(dislike + 1);
         setSnackAlert({
@@ -197,22 +284,12 @@ const Menu = () => {
         setCacheAction(true)
     }
 
-    // handling dailog logic
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
 
     return (
         <>
             <Head>
-                <title>Mess Wala :- Sunny Mess</title>
+                <title>Mess Wala :- {messInfo.mess_name}</title>
                 <meta name="description" content="Sunny Mess" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -248,12 +325,12 @@ const Menu = () => {
                                 <CardHeader
                                     avatar={
                                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                            60
+                                            {messInfo.thali_price}
                                         </Avatar>
                                     }
                                     sx={{ textAlign: 'center' }}
-                                    title="Sunny Mess"
-                                    subheader="Near Law College, ambegoan budruk, pune"
+                                    title={messInfo.mess_name}
+                                    subheader={messInfo.mess_address}
                                 />
                                 <CardContent>
                                     <List>
@@ -283,7 +360,7 @@ const Menu = () => {
                                             <Grid item xs={6} sm={6} md={6}>
                                                 <ListItemButton>
                                                     <ListItemIcon>
-                                                        <CloseIcon color="error" />
+                                                        {messInfo.non_veg ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
                                                     </ListItemIcon>
                                                     <ListItemText
                                                         primary="Non Veg"
@@ -293,7 +370,7 @@ const Menu = () => {
                                             <Grid item xs={6} sm={6} md={6}>
                                                 <ListItemButton>
                                                     <ListItemIcon>
-                                                        <CheckIcon color="success" />
+                                                        {messInfo.parcel_service ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
                                                     </ListItemIcon>
                                                     <ListItemText
                                                         primary="Parcel"
@@ -304,7 +381,7 @@ const Menu = () => {
                                                 <ListItemButton>
                                                     <ListItemText
                                                         primary="Lunch Time"
-                                                        secondary='12pm to 3pm'
+                                                        secondary={messInfo.lunch_time}
                                                     />
                                                 </ListItemButton>
                                             </Grid>
@@ -312,7 +389,7 @@ const Menu = () => {
                                                 <ListItemButton>
                                                     <ListItemText
                                                         primary="Dinner Time"
-                                                        secondary='7pm to 10pm'
+                                                        secondary={messInfo.dinner_time}
                                                     />
                                                 </ListItemButton>
                                             </Grid>
@@ -378,11 +455,14 @@ const Menu = () => {
                                     <CardContent>
 
                                         {
-                                            commentData.map((value, index) => (
-                                                <>
-                                                    <MenuComment data={value} key={index} />
-                                                </>
-                                            ))
+                                            commentData.length === 0 ?
+                                                <h3>No Comments...</h3>
+                                                :
+                                                commentData.map((value, index) => (
+                                                    <>
+                                                        <MenuComment data={value} key={index} />
+                                                    </>
+                                                ))
                                         }
 
 
@@ -430,9 +510,19 @@ const Menu = () => {
 export default Menu;
 
 
-export async function getServerSideProps(context) {
-    console.log(context.query.menu);
-    const isValid = mongoose.Types.ObjectId.isValid(context.query.menu);
+export async function getServerSideProps({ req, res, query }) {
+
+    const token = checkCookies('auth', { req, res });
+    if (!token) {
+        return {
+            redirect: {
+                destination: '/auth/register',
+                permanent: false,
+            },
+        }
+    }
+
+    const isValid = mongoose.Types.ObjectId.isValid(query.menu);
     if (!isValid) {
         return {
             redirect: {
@@ -441,7 +531,8 @@ export async function getServerSideProps(context) {
             },
         }
     }
+    const data = await axios.get(`${URL}mess/${query.menu}`)
     return {
-        props: {},
+        props: { messInfo: data.data },
     }
 }
