@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React from 'react'
 import { Chart } from "react-google-charts";
 
-const Statics = () => {
+const Statics = ({ data }) => {
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -13,10 +13,10 @@ const Statics = () => {
                     loader={<div>Loading Chart</div>}
                     data={[
                         ['action', 'count'],
-                        ['Likes', 89],
-                        ['Dislikes', 45],
-                        ['Views', 200],
-                        ['Comments', 15]
+                        ['Likes', data.likes],
+                        ['Dislikes', data.dislikes],
+                        ['Views', data.views],
+                        ['Comments', data.comments]
                     ]}
                     options={{
                         title: 'Todays Users Responses',
