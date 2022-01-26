@@ -15,6 +15,10 @@ import GoogleIcon from '@mui/icons-material/Google';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Joi from 'joi'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import Jwt from 'jsonwebtoken'
+import { checkCookies, setCookies } from 'cookies-next'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -22,7 +26,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const theme = createTheme();
 
 const Register = () => {
-
+    const router = useRouter();
+    const URL = process.env.NEXT_PUBLIC_URL;
     const [name, setName] = React.useState();
     const [email, setEmail] = React.useState();
     const [phone, setPhone] = React.useState();
@@ -37,7 +42,7 @@ const Register = () => {
         setData(true);
     }
 
-    const addUser = () => {
+    const addUser = async () => {
         const register = Joi.object({
             email: Joi.string().email({ tlds: { allow: false } }).required(),
             name: Joi.string().min(5).max(15).required(),
@@ -48,8 +53,27 @@ const Register = () => {
         if (error) {
             setError(error.message);
             setOpen(true);
+            return
         }
 
+        const user = {
+            email, name, phone
+        }
+
+        // sending data to server
+        const data = await axios.post(`${URL}user/register`, user);
+
+        // email already exists
+        if (data.data.data === 'email is already exists') {
+            setError('email is already exists');
+            setOpen(true);
+            return;
+        }
+
+        setCookies('auth', data.data)
+        const token = Jwt.decode(data.data);
+        setCookies('name', token.name);
+        router.push('/');
     }
 
     const handleClose = (event, reason) => {
@@ -169,3 +193,22 @@ const Register = () => {
 }
 
 export default Register
+
+
+export async function getServerSideProps({ req, res }) {
+    const token = checkCookies('auth', { req, res });
+    if (token) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {
+
+        }
+    }
+}
