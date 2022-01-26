@@ -27,6 +27,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import Jwt from 'jsonwebtoken';
+import { useRouter } from 'next/router'
+import { setCookies, checkCookies } from 'cookies-next';
 
 const bull = (
     <Box
@@ -39,7 +43,8 @@ const bull = (
 const theme = createTheme();
 
 const OwnerLogin = () => {
-
+    const router = useRouter();
+    const URL = process.env.NEXT_PUBLIC_URL;
     const [phone, setPhone] = React.useState();
     const [password, setPassword] = React.useState();
     const [passwordShow, setPasswordShow] = React.useState(false);
@@ -52,6 +57,19 @@ const OwnerLogin = () => {
     const handleClickShowPassword = () => {
         setPasswordShow(!passwordShow)
     };
+
+    const phoneAuth = async () => {
+        const data = await axios.post(`${URL}owner/login`, {
+            owner_phone: phone, owner_password: password
+        })
+        console.log(data.data);
+        setCookies('auth', data.data);
+
+        const tokeninfo = Jwt.decode(data.data);
+        setCookies('name', tokeninfo.name);
+        setCookies('id', tokeninfo.mess_id);
+        router.push('/dashboard');
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -135,6 +153,7 @@ const OwnerLogin = () => {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={phoneAuth}
                         >
                             Login
                         </Button>
@@ -176,3 +195,21 @@ const OwnerLogin = () => {
 }
 
 export default OwnerLogin
+
+export async function getServerSideProps({ req, res }) {
+    const token = checkCookies('auth', { req, res });
+    if (token) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {
+
+        }
+    }
+}
