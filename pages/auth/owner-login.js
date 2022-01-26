@@ -25,12 +25,16 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import Jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router'
 import { setCookies, checkCookies } from 'cookies-next';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const bull = (
     <Box
@@ -49,6 +53,15 @@ const OwnerLogin = () => {
     const [password, setPassword] = React.useState();
     const [passwordShow, setPasswordShow] = React.useState(false);
     const [show, setShow] = React.useState(false)
+    const [error, setError] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     const responseGoogle = (response) => {
         console.log(response.profileObj);
@@ -62,7 +75,16 @@ const OwnerLogin = () => {
         const data = await axios.post(`${URL}owner/login`, {
             owner_phone: phone, owner_password: password
         })
-        console.log(data.data);
+        if (data.data.data === 'owner not found') {
+            setError('account not found');
+            setOpen(true);
+            return;
+        }
+        if (data.data.data === 'wrong password') {
+            setError('please enter correct password');
+            setOpen(true);
+            return;
+        }
         setCookies('auth', data.data);
 
         const tokeninfo = Jwt.decode(data.data);
@@ -73,6 +95,9 @@ const OwnerLogin = () => {
 
     return (
         <ThemeProvider theme={theme}>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>{error}</Alert>
+            </Snackbar>
             <Container component="main" maxWidth="xs" sx={{ minHeight: '100vh' }}>
                 <CssBaseline />
                 <Link passHref href="/">
