@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, TwitterIcon, TwitterShareButton } from 'react-share'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import Box from '@mui/material/Box';
+import MessIcon from '../public/sunny.jpeg'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -44,7 +45,7 @@ const ItemCard = ({ data }) => {
 
     return (
         <>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={data.views} color="primary">
 
                 <Snackbar
                     open={snackStatus}
@@ -68,35 +69,40 @@ const ItemCard = ({ data }) => {
                     <CardHeader
                         avatar={
                             <Avatar sx={{ bgcolor: blue[700] }} aria-label="recipe">
-                                {data.price}
+                                {data.thali_price}
                             </Avatar>
                         }
                         sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h1.fontSize', textTransform: 'capitalize' }}
-                        title={data.name}
-                        subheader={data.address.slice(0, 30) + '...'}
+                        title={data.mess_name}
+                        subheader={data.mess_address.slice(0, 30) + '...'}
                     />
                     <CardMedia
                         component="img"
                         height="80"
-                        image="https://source.unsplash.com/1600x900/?nature,water"
+                        image={MessIcon.src}
                         alt="Paella dish"
                     />
                     <CardContent>
                         <Stack direction="row" sx={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }} spacing={1}>
-                            <Chip label="Chapati" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Rice" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Dal" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Palak" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Sabzi" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="crud milk" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Soyabean" variant="outlined" size="small" sx={{ my: 1 }} />
-                            <Chip label="Alo Sabzi" variant="outlined" size="small" sx={{ my: 1 }} />
+                            {
+                                data.menu_list.length === 0 ?
+                                    <>
+                                        <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available</Typography>
+                                    </>
+                                    :
+                                    data.menu_list.map((value, index) => (
+                                        <Box key={index}>
+                                            <Chip label={value.dish_name} variant="outlined" size="small" sx={{ my: 1 }} />
+                                        </Box>
+
+                                    ))
+                            }
                         </Stack>
                     </CardContent>
                     <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Box sx={{ display: 'flex' }}>
                             <InsertEmoticonIcon sx={{ color: 'green' }} />
-                            <Typography sx={{ fontWeight: 'light', fontSize: '15px', mx: 1 }}>23</Typography>
+                            <Typography sx={{ fontWeight: 'light', fontSize: '15px', mx: 1 }}>{data.like_count}</Typography>
                         </Box>
                         <TwitterShareButton url={"https://messwala.com/sunnymess"} title={"Checkout latest menu of Sunny Mess"} hashtags={['messwala, sunnymess']}>
                             <TwitterIcon size={20} round={true} />
@@ -108,7 +114,7 @@ const ItemCard = ({ data }) => {
                             <WhatsappIcon size={20} round={true} />
                         </WhatsappShareButton>
                         <IconButton aria-label="like" onClick={handleLoad}>
-                            <Link href={`/${data.id}`} passHref><MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} /></Link>
+                            <Link href={`/${data._id}`} passHref><MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} /></Link>
                         </IconButton>
                     </CardActions>
                 </Card>
