@@ -25,7 +25,7 @@ import UpdatePoster from './UpdatePoster';
 import UpdateInfo from './UpdateInfo';
 import UpdateOwner from './UpdateOwner'
 
-const OwnerProfile = () => {
+const OwnerProfile = ({ data }) => {
 
     const [updateStatus, setUpdateStatus] = React.useState('')
     const [deleteConfirm, setDeleteConfirm] = React.useState(false);
@@ -43,12 +43,12 @@ const OwnerProfile = () => {
                             <CardHeader
                                 avatar={
                                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                        60
+                                        {data.thali_price}
                                     </Avatar>
                                 }
                                 sx={{ textAlign: 'center' }}
-                                title="Sunny Mess"
-                                subheader="Near Bank of Maharashtra, ambegoan budruk"
+                                title={data.mess_name}
+                                subheader={data.mess_address}
                             />
                             <CardMedia
                                 component="img"
@@ -62,42 +62,42 @@ const OwnerProfile = () => {
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Name" secondary="Mahesh Gaikwad" />
+                                                    <ListItemText primary="Name" secondary={data.owner_name} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Phone" secondary="7894567895" />
+                                                    <ListItemText primary="Phone" secondary={data.owner_phone} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Non Veg" secondary="Yes" />
+                                                    <ListItemText primary="Non Veg" secondary={data.non_veg ? "Yes" : "No"} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Parcel" secondary="Yes" />
+                                                    <ListItemText primary="Parcel" secondary={data.parcel_service ? "Yes" : "No"} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Lunch Time" secondary="12 - 4" />
+                                                    <ListItemText primary="Lunch Time" secondary={data.lunch_time} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <ListItem disablePadding>
                                                 <ListItemButton>
-                                                    <ListItemText primary="Dinner Time" secondary="7 - 10" />
+                                                    <ListItemText primary="Dinner Time" secondary={data.dinner_time} />
                                                 </ListItemButton>
                                             </ListItem>
                                         </Grid>
@@ -133,16 +133,16 @@ const OwnerProfile = () => {
                     <Grid item xs={12} sm={6}>
 
                         {
-                            updateStatus === 'info' && <UpdateInfo />
+                            updateStatus === 'info' && <UpdateInfo data={data} />
 
                         }
 
                         {
-                            updateStatus === 'poster' && <UpdatePoster />
+                            updateStatus === 'poster' && <UpdatePoster data={data} />
                         }
 
                         {
-                            updateStatus === 'owner' && <UpdateOwner />
+                            updateStatus === 'owner' && <UpdateOwner data={data} />
                         }
 
                     </Grid>

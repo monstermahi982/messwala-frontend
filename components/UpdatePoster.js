@@ -17,7 +17,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const Input = styled('input')({
     display: 'none',
 });
-const UpdatePoster = () => {
+const UpdatePoster = ({ data }) => {
     const [poster, setPoster] = React.useState("https://source.unsplash.com/1600x900/?food,maggi")
     const [alert, setAlert] = React.useState(true)
     const [alertMess, setAlertMess] = React.useState({})

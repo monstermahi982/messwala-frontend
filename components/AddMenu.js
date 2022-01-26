@@ -16,9 +16,9 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import Image from 'next/image'
-import menuItem from '../Controllers/menuItem'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -30,10 +30,11 @@ const Input = styled('input')({
     display: 'none',
 });
 
-const AddMenu = () => {
-
-    const [data, setData] = React.useState(false);
+const AddMenu = ({ item_list }) => {
+    const ApiURL = process.env.NEXT_PUBLIC_URL;
+    const [data, setData] = React.useState(true);
     const [image, setImage] = React.useState('');
+    const [imageURL, setImageURL] = React.useState('');
     const [item, setItem] = React.useState([])
     const [alert, setAlert] = React.useState(false)
     const [alertMess, setAlertMess] = React.useState({})
@@ -45,7 +46,7 @@ const AddMenu = () => {
         setAlert(false);
     };
 
-    const uploadImage = (event) => {
+    const uploadImage = async (event) => {
 
         if (event.target.files[0] === undefined) {
             setAlertMess({ "message": "image not found", "status": "error" })
@@ -58,6 +59,12 @@ const AddMenu = () => {
             return;
         }
         setImage(URL.createObjectURL(event.target.files[0]));
+        console.log("code is running");
+        const formData = new FormData();
+        formData.append('image', event.target.files[0]);
+        const data = await axios.post(`${ApiURL}menu/uploadImage`, formData);
+        console.log(data);
+        setImageURL(data.data);
         setAlertMess({ "message": "Image Uploaded", "status": "success" })
         setAlert(true);
     }
@@ -72,10 +79,13 @@ const AddMenu = () => {
 
 
     const submitMenu = async () => {
-        const formData = new FormData();
-        formData.append('image', image)
-        formData.append('items', item)
-        console.log(formData);
+
+        const data = await axios.post(`${ApiURL}menu `, {
+            mess_id: "61c97905f052a4f15f35dc9e",
+            menu_image: imageURL,
+            menu_list: item
+        })
+        console.log(data.data);
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
         setImage('');
@@ -138,9 +148,9 @@ const AddMenu = () => {
                         <Autocomplete
                             multiple
                             id="checkboxes-tags-demo"
-                            options={menuItem}
+                            options={item_list}
                             disableCloseOnSelect
-                            getOptionLabel={(option) => option.name}
+                            getOptionLabel={(option) => option.dish_name}
                             renderOption={(props, option, { selected }) => (
                                 <li {...props}>
                                     <Checkbox
@@ -149,7 +159,7 @@ const AddMenu = () => {
                                         style={{ marginRight: 8 }}
                                         checked={selected}
                                     />
-                                    {option.name}
+                                    {option.dish_name}
                                 </li>
                             )}
 

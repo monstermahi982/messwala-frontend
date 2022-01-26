@@ -12,18 +12,19 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 
 
-const UpdateOwner = () => {
-
+const UpdateOwner = ({ data }) => {
+    const [name, setName] = React.useState(data.owner_name);
+    const [phone, setPhone] = React.useState(data.owner_phone);
     return (
         <>
             <Box sx={{ py: 1, px: 4 }}>
                 <Typography sx={{ textAlign: 'center', fontSize: '30px', letterSpacing: '3px', py: 2 }}>Update Personal Information</Typography>
                 <Grid container >
                     <Grid item xs={12} sm={6} md={6}>
-                        <TextField sx={{ p: 1 }} id="name" fullWidth label="Name" variant="outlined" />
+                        <TextField sx={{ p: 1 }} id="name" value={name} onChange={(e) => setName(e.target.value)} fullWidth label="Name" variant="outlined" />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <TextField sx={{ p: 1 }} id="phone" type="number" fullWidth label="Phone" variant="outlined" />
+                        <TextField sx={{ p: 1 }} id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} type="number" fullWidth label="Phone" variant="outlined" />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}></Grid>
                 </Grid>
