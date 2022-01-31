@@ -148,7 +148,7 @@ const Menu = ({ messInfo }) => {
         if (cacheComment) {
 
             commentData.push({
-                name: sessionStorage.getItem('name'),
+                name: getCookie('name'),
                 comment: comment
             })
             setComment('');
@@ -167,7 +167,7 @@ const Menu = ({ messInfo }) => {
         console.log(data.data);
 
         commentData.push({
-            name: sessionStorage.getItem('name'),
+            name: getCookie('name'),
             comment: comment
         })
         setComment('');
