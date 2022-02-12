@@ -164,7 +164,6 @@ const Menu = ({ messInfo }) => {
 
         // axios code
         const data = await axios.post(`${ApiURL}comment`, { "mess_id": messInfo._id, comment }, config);
-        console.log(data.data);
 
         commentData.push({
             name: getCookie('name'),
@@ -217,11 +216,9 @@ const Menu = ({ messInfo }) => {
 
         //axios code
         if (!token) {
-            console.log('token not added');
             return;
         }
         const data = await axios.post(`${ApiURL}action/like`, { "mess_id": messInfo._id }, config);
-        console.log(data);
 
         setLike(like + 1);
         setSnackAlert({
@@ -268,11 +265,9 @@ const Menu = ({ messInfo }) => {
 
         //axios code
         if (!token) {
-            console.log('token not added');
             return;
         }
         const data = await axios.post(`${ApiURL}action/dislike`, { "mess_id": messInfo._id }, config);
-        console.log(data.data);
 
         setDisLike(dislike + 1);
         setSnackAlert({
@@ -312,7 +307,7 @@ const Menu = ({ messInfo }) => {
                             alt="Picture of the author"
                             width="1000"
                             height={600}
-                            src={MessImage.src} sx={{ p: 2 }}
+                            src={messInfo.menu_image} sx={{ p: 2 }}
                             onClick={handleClickOpen}
                         />
                     </Grid>
@@ -328,7 +323,7 @@ const Menu = ({ messInfo }) => {
                                             {messInfo.thali_price}
                                         </Avatar>
                                     }
-                                    sx={{ textAlign: 'center' }}
+                                    sx={{ textAlign: 'center', textTransform: 'capitalize' }}
                                     title={messInfo.mess_name}
                                     subheader={messInfo.mess_address}
                                 />
@@ -341,8 +336,8 @@ const Menu = ({ messInfo }) => {
                                                         <PersonIcon color="primary" />
                                                     </ListItemIcon>
                                                     <ListItemText
-                                                        primary="Owner Name"
-                                                        secondary="Mahesh Gaikwad"
+                                                        primary="Mahesh Gaikwad"
+                                                        secondary="Owner Name"
                                                     />
                                                 </ListItemButton>
                                             </Grid>
@@ -352,8 +347,8 @@ const Menu = ({ messInfo }) => {
                                                         <LocalPhoneIcon color="primary" />
                                                     </ListItemIcon>
                                                     <ListItemText
-                                                        primary="Phone Number"
-                                                        secondary="1231231234"
+                                                        primary="2432423513"
+                                                        secondary="Phone Number"
                                                     />
                                                 </ListItemButton>
                                             </Grid>
@@ -380,16 +375,16 @@ const Menu = ({ messInfo }) => {
                                             <Grid item xs={6} sm={6} md={6}>
                                                 <ListItemButton>
                                                     <ListItemText
-                                                        primary="Lunch Time"
-                                                        secondary={messInfo.lunch_time}
+                                                        primary={messInfo.lunch_time}
+                                                        secondary="Lunch Time"
                                                     />
                                                 </ListItemButton>
                                             </Grid>
                                             <Grid item xs={6} sm={6} md={6}>
                                                 <ListItemButton>
                                                     <ListItemText
-                                                        primary="Dinner Time"
-                                                        secondary={messInfo.dinner_time}
+                                                        primary={messInfo.dinner_time}
+                                                        secondary="Dinner Time"
                                                     />
                                                 </ListItemButton>
                                             </Grid>
@@ -493,7 +488,7 @@ const Menu = ({ messInfo }) => {
 
                     </Box>
                     <Image
-                        src={MessImage.src}
+                        src={messInfo.menu_image}
                         sx={{ p: 5 }}
                         alt="Picture of the author"
                         width="100%"
