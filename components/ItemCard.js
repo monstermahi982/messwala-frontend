@@ -78,7 +78,7 @@ const ItemCard = ({ data }) => {
                     <CardMedia
                         component="img"
                         height="80"
-                        image={MessIcon.src}
+                        image={data.mess_poster}
                         alt="Paella dish"
                     />
                     <CardContent>
