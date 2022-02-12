@@ -2,7 +2,6 @@ import React from 'react'
 import Head from 'next/head'
 import Grid from '@mui/material/Grid';
 import ItemCard from '../components/ItemCard'
-import { ItemData } from '../Controllers/ItemData';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,7 +9,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import TextField from '@mui/material/TextField';
-import menuItem from '../Controllers/menuItem'
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
@@ -29,21 +27,17 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-
-
-
-export default function Home({ messDataItem }) {
+export default function Home({ messDataItem, dish_item }) {
   const [value, setValue] = React.useState([40, 60]);
   const [item, setItem] = React.useState([])
   const PageCount = Math.ceil(messDataItem.length / 5);
   const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState([])
-  const [filter, setFilter] = React.useState();
+  const [filter, setFilter] = React.useState('');
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // console.log(messDataItem);
 
   const PageMenu = async () => {
     if (page * 6 - 1 > messDataItem.length) {
@@ -81,15 +75,15 @@ export default function Home({ messDataItem }) {
               title="Filter"
             />
             <CardContent>
-              <TextField value={filter} onChange={(e) => setFilter(e.target.value)} size="small" sx={{ mb: 1 }} fullWidth id="messname" label="Mess Name" variant="outlined" />
+              <TextField onChange={(e) => setFilter(e.target.value)} value={filter} size="small" sx={{ mb: 1 }} fullWidth id="messname" label="Mess Name" variant="outlined" />
 
               <Autocomplete
                 sx={{ mb: 1, width: '100%' }}
                 multiple
                 id="checkboxes-tags-demo"
-                options={menuItem}
+                options={dish_item}
                 disableCloseOnSelect
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.dish_name}
                 renderOption={(props, option, { selected }) => (
                   <li {...props}>
                     <Checkbox
@@ -98,7 +92,7 @@ export default function Home({ messDataItem }) {
                       style={{ marginRight: 8 }}
                       checked={selected}
                     />
-                    {option.name}
+                    {option.dish_name}
                   </li>
                 )}
 
@@ -176,7 +170,10 @@ export default function Home({ messDataItem }) {
 
 export async function getServerSideProps(context) {
   const data = await axios.get(`${URL}mess`);
+
+  const dish_item = await axios.get(`${process.env.URL}item`);
+
   return {
-    props: { messDataItem: data.data }
+    props: { messDataItem: data.data, dish_item: dish_item.data }
   }
 }
