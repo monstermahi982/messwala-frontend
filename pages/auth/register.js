@@ -28,15 +28,14 @@ const theme = createTheme();
 const Register = () => {
     const router = useRouter();
     const URL = process.env.NEXT_PUBLIC_URL;
-    const [name, setName] = React.useState();
-    const [email, setEmail] = React.useState();
-    const [phone, setPhone] = React.useState();
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [phone, setPhone] = React.useState('');
     const [data, setData] = React.useState(false);
     const [error, setError] = React.useState('');
     const [open, setOpen] = React.useState(false);
 
     const responseGoogle = (response) => {
-        console.log(response.profileObj);
         setName(response.profileObj.name);
         setEmail(response.profileObj.email)
         setData(true);
@@ -64,15 +63,21 @@ const Register = () => {
         const data = await axios.post(`${URL}user/register`, user);
 
         // email already exists
-        if (data.data.data === 'email is already exists') {
+        if (data.data === 'email is already exists') {
             setError('email is already exists');
             setOpen(true);
             return;
         }
 
-        setCookies('auth', data.data)
+        if (data.data === 'blocked') {
+            setError('email is blocked by admin');
+            setOpen(true);
+            return;
+        }
+
+        setCookies('auth', data.data, { maxAge: 60 * 10 })
         const token = Jwt.decode(data.data);
-        setCookies('name', token.name);
+        setCookies('name', token.name, { maxAge: 60 * 10 });
         router.push('/');
     }
 
