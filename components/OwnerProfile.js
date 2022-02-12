@@ -53,7 +53,7 @@ const OwnerProfile = ({ data }) => {
                             <CardMedia
                                 component="img"
                                 height="140"
-                                image="https://source.unsplash.com/1600x900/?nature,water"
+                                image={data.mess_poster}
                                 alt="green iguana"
                             />
                             <CardContent>
