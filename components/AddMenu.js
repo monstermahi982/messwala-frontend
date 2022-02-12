@@ -19,6 +19,7 @@ import Image from 'next/image'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
+import { getCookie } from 'cookies-next'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -59,11 +60,9 @@ const AddMenu = ({ item_list }) => {
             return;
         }
         setImage(URL.createObjectURL(event.target.files[0]));
-        console.log("code is running");
         const formData = new FormData();
         formData.append('image', event.target.files[0]);
         const data = await axios.post(`${ApiURL}menu/uploadImage`, formData);
-        console.log(data);
         setImageURL(data.data);
         setAlertMess({ "message": "Image Uploaded", "status": "success" })
         setAlert(true);
@@ -80,12 +79,17 @@ const AddMenu = ({ item_list }) => {
 
     const submitMenu = async () => {
 
+        const id = getCookie('id');
+        if (!id) {
+            alert();
+            return;
+        }
+
         const data = await axios.post(`${ApiURL}menu `, {
-            mess_id: "61c97905f052a4f15f35dc9e",
+            mess_id: id,
             menu_image: imageURL,
             menu_list: item
-        })
-        console.log(data.data);
+        });
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
         setImage('');
