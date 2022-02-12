@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
+import posterImageAs from '../public/menuImage.jpeg'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,7 +20,9 @@ const Input = styled('input')({
     display: 'none',
 });
 const UpdatePoster = ({ data }) => {
-    const [poster, setPoster] = React.useState("https://source.unsplash.com/1600x900/?food,maggi")
+    const ApiURL = process.env.NEXT_PUBLIC_URL;
+    const [poster, setPoster] = React.useState(posterImageAs)
+    const [posterImage, setPosterImage] = React.useState('');
     const [alert, setAlert] = React.useState(true)
     const [alertMess, setAlertMess] = React.useState({})
     const handleClose = (event, reason) => {
@@ -39,6 +43,7 @@ const UpdatePoster = ({ data }) => {
             setAlert(true);
             return;
         }
+        setPosterImage(event.target.files[0]);
         setPoster(URL.createObjectURL(event.target.files[0]));
         setAlertMess({ "message": "Poster Uploaded", "status": "success" })
         setAlert(true);
@@ -46,9 +51,10 @@ const UpdatePoster = ({ data }) => {
 
     const updatePoster = async () => {
         const formData = new FormData();
-        formData.append('poster', poster)
-        formData.append('id', '3123')
-        console.log(formData);
+        formData.append('image', posterImage)
+        formData.append('id', data._id);
+
+        const posterUpdate = await axios.put(`${ApiURL}mess/poster/61f976e2ed3de32c038ea1eb`, formData);
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
     }
