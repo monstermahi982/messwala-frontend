@@ -119,16 +119,23 @@ export async function getServerSideProps({ req, res }) {
 
     const id = getCookie('id', { req, res });
 
+    if (!id) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
     // dish item deatils
     const data = await axios.get(`${process.env.URL}item`);
 
     // mess statics
     const statics = await axios.get(`${process.env.URL}static/mess/${id}`);
-    console.log(statics.data);
 
     // owner deatils
     const owner_deatils = await axios.get(`${process.env.URL}mess/info/${id}`);
-    console.log(owner_deatils.data);
 
     return {
         props: {
