@@ -31,6 +31,7 @@ import axios from 'axios';
 import Jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router'
 import { setCookies, checkCookies } from 'cookies-next';
+import Joi from 'joi'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,8 +50,8 @@ const theme = createTheme();
 const OwnerLogin = () => {
     const router = useRouter();
     const URL = process.env.NEXT_PUBLIC_URL;
-    const [phone, setPhone] = React.useState();
-    const [password, setPassword] = React.useState();
+    const [phone, setPhone] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [passwordShow, setPasswordShow] = React.useState(false);
     const [show, setShow] = React.useState(false)
     const [error, setError] = React.useState('');
@@ -64,7 +65,6 @@ const OwnerLogin = () => {
     };
 
     const responseGoogle = (response) => {
-        console.log(response.profileObj);
     }
 
     const handleClickShowPassword = () => {
@@ -72,15 +72,29 @@ const OwnerLogin = () => {
     };
 
     const phoneAuth = async () => {
+
+        const loginOwner = Joi.object({
+            password: Joi.string().required(),
+            phone: Joi.string().length(10).pattern(/^[0-9]+$/).required()
+        })
+
+        const { error } = loginOwner.validate({ password, phone });
+        if (error) {
+
+            setError(error.message);
+            setOpen(true);
+            return
+        }
+
         const data = await axios.post(`${URL}owner/login`, {
             owner_phone: phone, owner_password: password
         })
-        if (data.data.data === 'owner not found') {
+        if (data.data === 'not found') {
             setError('account not found');
             setOpen(true);
             return;
         }
-        if (data.data.data === 'wrong password') {
+        if (data.data === 'wrong password') {
             setError('please enter correct password');
             setOpen(true);
             return;
@@ -88,8 +102,8 @@ const OwnerLogin = () => {
         setCookies('auth', data.data);
 
         const tokeninfo = Jwt.decode(data.data);
-        setCookies('name', tokeninfo.name);
-        setCookies('id', tokeninfo.mess_id);
+        setCookies('name', tokeninfo.name, { maxAge: 60 * 10 });
+        setCookies('id', tokeninfo.mess_id, { maxAge: 60 * 10 });
         router.push('/dashboard');
     }
 
@@ -124,6 +138,7 @@ const OwnerLogin = () => {
                             render={renderProps => (
                                 <Button variant="contained" color="primary" startIcon={<GoogleIcon color="error" />} onClick={renderProps.onClick} disabled={renderProps.disabled}>register with Google</Button>
                             )}
+                            disabled
                             buttonText="Login"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
