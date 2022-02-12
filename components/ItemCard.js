@@ -19,12 +19,14 @@ import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, T
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import Box from '@mui/material/Box';
 import MessIcon from '../public/sunny.jpeg'
+import { useRouter } from 'next/router';
+import { checkCookies, getCookie, removeCookies } from 'cookies-next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const ItemCard = ({ data }) => {
-
+    const router = useRouter();
     const [snackStatus, setsnackStatus] = React.useState(false);
     const [snackAlert, setSnackAlert] = React.useState({});
 
@@ -36,8 +38,15 @@ const ItemCard = ({ data }) => {
         setsnackStatus(false);
     };
 
-    const handleLoad = () => {
-        setLoad(false)
+    // redirect user to mess page if token is present 
+    const showMenu = (id) => {
+        const token = checkCookies('auth');
+        if (!token) {
+            setSnackAlert({ message: "please login first", type: "warning" });
+            setsnackStatus(true);
+            return;
+        }
+        router.push(`/${id}`);
     }
 
     return (
@@ -87,6 +96,7 @@ const ItemCard = ({ data }) => {
 
                                     ))
                             }
+                            <Chip label="more" variant="outlined" size="small" sx={{ my: 1 }} />
                         </Stack>
                     </CardContent>
                     <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -103,8 +113,8 @@ const ItemCard = ({ data }) => {
                         <WhatsappShareButton url={"https://messwala.com/sunnymess"} title={"Checkout latest menu of Sunny Mess"} >
                             <WhatsappIcon size={20} round={true} />
                         </WhatsappShareButton>
-                        <IconButton aria-label="like" onClick={handleLoad}>
-                            <Link href={`/${data._id}`} passHref><MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} /></Link>
+                        <IconButton aria-label="like" onClick={() => showMenu(data._id)}>
+                            <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
                         </IconButton>
                     </CardActions>
                 </Card>
