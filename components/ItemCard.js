@@ -15,8 +15,6 @@ import { Typography } from '@mui/material';
 import Link from 'next/link'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, TwitterIcon, TwitterShareButton } from 'react-share'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import Box from '@mui/material/Box';
@@ -29,7 +27,6 @@ const ItemCard = ({ data }) => {
 
     const [snackStatus, setsnackStatus] = React.useState(false);
     const [snackAlert, setSnackAlert] = React.useState({});
-    const [load, setLoad] = React.useState(false);
 
     // handling alert code
     const handleAlertAlertClose = (event, reason) => {
@@ -57,13 +54,6 @@ const ItemCard = ({ data }) => {
                         {snackAlert.message}
                     </Alert>
                 </Snackbar>
-                <Backdrop
-                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={load}
-                    onClick={handleLoad}
-                >
-                    <CircularProgress color="inherit" />
-                </Backdrop>
 
                 <Card sx={{ Width: '100%' }}>
                     <CardHeader
