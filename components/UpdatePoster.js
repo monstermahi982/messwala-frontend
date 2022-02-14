@@ -10,6 +10,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import posterImageAs from '../public/menuImage.jpeg'
+import { getCookie } from 'cookies-next'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -32,6 +33,12 @@ const UpdatePoster = ({ data }) => {
 
         setAlert(false);
     };
+
+    // header file
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth')}` }
+    };
+
     const uploadImage = (event) => {
         if (event.target.files[0] === undefined) {
             setAlertMess({ "message": "image not found", "status": "error" })
@@ -54,7 +61,15 @@ const UpdatePoster = ({ data }) => {
         formData.append('image', posterImage)
         formData.append('id', data._id);
 
-        const posterUpdate = await axios.put(`${ApiURL}mess/poster/61f976e2ed3de32c038ea1eb`, formData);
+        const posterUpdate = await axios.put(`${ApiURL}mess/poster/61f976e2ed3de32c038ea1eb`, formData, config);
+
+        // checking token verfication
+        if (posterUpdate.data === "token not found" || posterUpdate.data === "not verified") {
+            setAlertMess({ "message": "Something went wrong", "status": "error" })
+            setAlert(true);
+            return;
+        }
+
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
     }

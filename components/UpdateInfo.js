@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { getCookie } from 'cookies-next'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -27,6 +28,11 @@ const UpdateInfo = ({ data }) => {
     const [nonveg, setNonveg] = React.useState(data.non_veg);
     const [parcel, setParcel] = React.useState(data.parcel_service);
 
+    // header file
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth')}` }
+    };
+
     const updateMess = async () => {
 
         const mess = {
@@ -38,7 +44,15 @@ const UpdateInfo = ({ data }) => {
             lunch_time: lunch,
             dinner_time: dinner
         }
-        const updateData = await axios.put(`${URL}mess/info/${data._id}`, mess);
+        const updateData = await axios.put(`${URL}mess/info/${data._id}`, mess, config);
+
+        // checking token verfication
+        if (updateData.data === "token not found" || updateData.data === "not verified") {
+            setAlertMessage({ "message": "Something went wrong", "status": "error" })
+            setAlert(true);
+            return;
+        }
+
         if (updateData.data === "info updated") {
             setAlertMessage({ message: updateData.data, status: "success" });
             setAlert(true);

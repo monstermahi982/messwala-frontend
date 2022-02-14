@@ -107,6 +107,12 @@ const Dashboard = ({ item_list, statics, owner_deatils }) => {
 export default Dashboard
 
 export async function getServerSideProps({ req, res }) {
+
+    // header file
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth', { req, res })}` }
+    };
+
     const token = checkCookies('auth', { req, res });
     if (!token) {
         return {
@@ -129,13 +135,43 @@ export async function getServerSideProps({ req, res }) {
     }
 
     // dish item deatils
-    const data = await axios.get(`${process.env.URL}item`);
+    const data = await axios.get(`${process.env.URL}item`, config);
+
+    // checking token verfication
+    if (data.data === "token not found" || data.data === "not verified") {
+        return {
+            redirect: {
+                destination: '/invalid-mess',
+                permanent: false,
+            },
+        }
+    }
 
     // mess statics
-    const statics = await axios.get(`${process.env.URL}static/mess/${id}`);
+    const statics = await axios.get(`${process.env.URL}static/mess/${id}`, config);
+
+    // checking token verfication
+    if (statics.data === "token not found" || statics.data === "not verified") {
+        return {
+            redirect: {
+                destination: '/invalid-mess',
+                permanent: false,
+            },
+        }
+    }
 
     // owner deatils
-    const owner_deatils = await axios.get(`${process.env.URL}mess/info/${id}`);
+    const owner_deatils = await axios.get(`${process.env.URL}mess/info/${id}`, config);
+
+    // checking token verfication
+    if (owner_deatils.data === "token not found" || owner_deatils.data === "not verified") {
+        return {
+            redirect: {
+                destination: '/invalid-mess',
+                permanent: false,
+            },
+        }
+    }
 
     return {
         props: {

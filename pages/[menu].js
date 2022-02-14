@@ -455,7 +455,7 @@ const Menu = ({ messInfo }) => {
                                                 :
                                                 commentData.map((value, index) => (
                                                     <>
-                                                        <MenuComment data={value} key={index} />
+                                                        <MenuComment data={value} key={value._id} />
                                                     </>
                                                 ))
                                         }
@@ -507,6 +507,11 @@ export default Menu;
 
 export async function getServerSideProps({ req, res, query }) {
 
+    // header file
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth', { req, res })}` }
+    };
+
     const token = checkCookies('auth', { req, res });
     if (!token) {
         return {
@@ -526,7 +531,18 @@ export async function getServerSideProps({ req, res, query }) {
             },
         }
     }
-    const data = await axios.get(`${URL}mess/${query.menu}`)
+    const data = await axios.get(`${URL}mess/${query.menu}`, config);
+
+    // checking token verfication
+    if (data.data === "token not found" || data.data === "not verified") {
+        return {
+            redirect: {
+                destination: '/invalid-mess',
+                permanent: false,
+            },
+        }
+    }
+
     return {
         props: { messInfo: data.data },
     }

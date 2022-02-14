@@ -47,6 +47,11 @@ const AddMenu = ({ item_list }) => {
         setAlert(false);
     };
 
+    // header file
+    const config = {
+        headers: { Authorization: `Bearer ${getCookie('auth')}` }
+    };
+
     const uploadImage = async (event) => {
 
         if (event.target.files[0] === undefined) {
@@ -62,7 +67,15 @@ const AddMenu = ({ item_list }) => {
         setImage(URL.createObjectURL(event.target.files[0]));
         const formData = new FormData();
         formData.append('image', event.target.files[0]);
-        const data = await axios.post(`${ApiURL}menu/uploadImage`, formData);
+        const data = await axios.post(`${ApiURL}menu/uploadImage`, formData, config);
+
+        // checking token verfication
+        if (data.data === "token not found" || data.data === "not verified") {
+            setAlertMess({ "message": "Something went wrong", "status": "error" })
+            setAlert(true);
+            return;
+        }
+
         setImageURL(data.data);
         setAlertMess({ "message": "Image Uploaded", "status": "success" })
         setAlert(true);
@@ -89,7 +102,15 @@ const AddMenu = ({ item_list }) => {
             mess_id: id,
             menu_image: imageURL,
             menu_list: item
-        });
+        }, config);
+
+        // checking token verfication
+        if (data.data === "token not found" || data.data === "not verified") {
+            setAlertMess({ "message": "Something went wrong", "status": "error" })
+            setAlert(true);
+            return;
+        }
+
         setAlertMess({ "message": "Menu Uploaded", "status": "success" })
         setAlert(true);
         setImage('');
