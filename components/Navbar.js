@@ -30,24 +30,24 @@ const Navbar = () => {
     };
     const URL = process.env.NEXT_PUBLIC_URL;
     const [userAuth, setUserAuth] = React.useState(false);
-    const responseGoogle = async ({ profileObj }) => {
-        console.log(profileObj);
-        const data = await axios.post(`${URL}user/login`, { email: profileObj.email });
-        if (data.data === "user not found") {
-            setAlertMessage({ message: "email not found", status: "error" })
-            setAlert(true);
-            return;
-        } if (data.data === "your account is blocked") {
-            setAlertMessage({ message: "your account is blocked by admin", status: "warning" })
-            setAlert(true);
-            return;
-        }
-        const token = await Jwt.decode(data.data);
-        setCookies('auth', data.data, { maxAge: 60 * 10 });
-        setCookies('name', token.name, { maxAge: 60 * 10 });
-        setUserAuth(true)
-        setAlertMessage({ message: `welcome back ${token.name}`, status: "success" })
-        setAlert(true);
+    const responseGoogle = async (data) => {
+        console.log(data);
+        // const data = await axios.post(`${URL}user/login`, { email: profileObj.email });
+        // if (data.data === "user not found") {
+        //     setAlertMessage({ message: "email not found", status: "error" })
+        //     setAlert(true);
+        //     return;
+        // } if (data.data === "your account is blocked") {
+        //     setAlertMessage({ message: "your account is blocked by admin", status: "warning" })
+        //     setAlert(true);
+        //     return;
+        // }
+        // const token = await Jwt.decode(data.data);
+        // setCookies('auth', data.data, { maxAge: 60 * 10 });
+        // setCookies('name', token.name, { maxAge: 60 * 10 });
+        // setUserAuth(true)
+        // setAlertMessage({ message: `welcome back ${token.name}`, status: "success" })
+        // setAlert(true);
     }
 
     const logout = () => {
