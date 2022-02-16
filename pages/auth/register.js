@@ -19,6 +19,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import Jwt from 'jsonwebtoken'
 import { checkCookies, setCookies } from 'cookies-next'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -34,14 +35,18 @@ const Register = () => {
     const [data, setData] = React.useState(false);
     const [error, setError] = React.useState('');
     const [open, setOpen] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
+    const [showField, setShowfield] = React.useState(false);
 
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
         setEmail(response.profileObj.email)
         setData(true);
+        setShowfield(true);
     }
 
     const addUser = async () => {
+        setLoader(true);
         const register = Joi.object({
             email: Joi.string().email({ tlds: { allow: false } }).required(),
             name: Joi.string().min(5).max(15).required(),
@@ -52,6 +57,7 @@ const Register = () => {
         if (error) {
             setError(error.message);
             setOpen(true);
+            setLoader(false);
             return
         }
 
@@ -66,18 +72,21 @@ const Register = () => {
         if (data.data === 'email is already exists') {
             setError('email is already exists');
             setOpen(true);
+            setLoader(false);
             return;
         }
 
         if (data.data === 'blocked') {
             setError('email is blocked by admin');
             setOpen(true);
+            setLoader(false);
             return;
         }
 
         setCookies('auth', data.data, { maxAge: 60 * 10 })
         const token = Jwt.decode(data.data);
         setCookies('name', token.name, { maxAge: 60 * 10 });
+        setLoader(false);
         router.push('/');
     }
 
@@ -127,73 +136,85 @@ const Register = () => {
                             cookiePolicy={'single_host_origin'}
                         />
                     </Box>
-                    <Box sx={{ mt: 1 }}>
+                    {
+                        showField ?
+                            <Box sx={{ mt: 1 }}>
 
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            // label="Email"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            value={email}
-                            disabled
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    // label="Email"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    value={email}
+                                    disabled
 
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="name"
-                            label="Name"
-                            name="name"
-                            autoComplete="name"
-                            autoFocus
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            disabled={data ? false : true}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="phone"
-                            label="Phone"
-                            name="phone"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            autoComplete="phone"
-                            autoFocus
-                            disabled={data ? false : true}
-                            type="number"
-                        />
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            disabled={data ? false : true}
-                            onClick={addUser}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/auth/owner-login" variant="body2">
-                                    {"Mess Owner"}
-                                </Link>
-                            </Grid>
-                            <Grid item sx={{ pb: 1 }}>
-                                <Link href="/" variant="body2">
-                                    {"Already have an account? Login"}
-                                </Link>
-                            </Grid>
-                        </Grid>
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    label="Name"
+                                    name="name"
+                                    autoComplete="name"
+                                    autoFocus
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    disabled={data ? false : true}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="phone"
+                                    label="Phone"
+                                    name="phone"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    autoComplete="phone"
+                                    autoFocus
+                                    disabled={data ? false : true}
+                                    type="number"
+                                />
+                                {
+                                    loader ?
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginY: 2 }}><CircularProgress color="secondary" /></Box>
+
+                                        :
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{ mt: 3, mb: 2 }}
+                                            disabled={data ? false : true}
+                                            onClick={addUser}
+                                        >
+                                            Sign In
+                                        </Button>
+                                }
+                            </Box>
+                            :
+                            <Box sx={{ height: '215px' }}></Box>
+                    }
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 3 }}>
+                        <Box sx={{ marginRight: 2 }}>
+                            <Link href="/auth/owner-login" variant="body2">
+                                {"Mess Owner"}
+                            </Link>
+                        </Box>
+                        <Box sx={{ marginLeft: 2 }}>
+                            <Link href="/" variant="body2">
+                                {"Already have an account? Login"}
+                            </Link>
+                        </Box>
                     </Box>
                 </Box>
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     )
 }
 
