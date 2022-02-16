@@ -13,6 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useRouter } from 'next/router'
 import { setCookies, getCookie, removeCookies } from 'cookies-next';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -20,6 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Navbar = () => {
     const router = useRouter();
+    const [loader, setLoader] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState({});
     const handleAlertClose = (event, reason) => {
@@ -30,17 +32,18 @@ const Navbar = () => {
     };
     const URL = process.env.NEXT_PUBLIC_URL;
     const [userAuth, setUserAuth] = React.useState(false);
+
     const responseGoogle = async ({ profileObj }) => {
-        console.log(profileObj);
+        setLoader(true);
         const data = await axios.post(`${URL}user/login`, { email: profileObj.email });
         if (data.data === "user not found") {
             setAlertMessage({ message: "email not found", status: "error" })
             setAlert(true);
-            return;
+            return setLoader(false);
         } if (data.data === "your account is blocked") {
             setAlertMessage({ message: "your account is blocked by admin", status: "warning" })
             setAlert(true);
-            return;
+            return setLoader(false);;
         }
         const token = await Jwt.decode(data.data);
         setCookies('auth', data.data, { maxAge: 60 * 10 });
@@ -48,6 +51,7 @@ const Navbar = () => {
         setUserAuth(true)
         setAlertMessage({ message: `welcome back ${token.name}`, status: "success" })
         setAlert(true);
+        setLoader(false);
     }
 
     const logout = () => {
@@ -71,7 +75,7 @@ const Navbar = () => {
     }, [])
 
     return (
-        <div>
+        <>
             <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlertClose}>
                 <Alert onClose={handleAlertClose} severity={alertMessage.status} sx={{ width: '100%' }}>
                     {alertMessage.message}
@@ -97,7 +101,7 @@ const Navbar = () => {
                                         <GoogleLogin
                                             clientId="716248828673-kjpok8rlfaqv95m46vpjuk55hc6tpjso.apps.googleusercontent.com"
                                             render={renderProps => (
-                                                <Button variant="contained" endIcon={<GoogleIcon color="error" />} onClick={renderProps.onClick} disabled={renderProps.disabled}>Login</Button>
+                                                <Button variant="contained" endIcon={loader ? <> <CircularProgress size={30} color="secondary" /> </> : <><GoogleIcon color="error" /> </>} onClick={renderProps.onClick} disabled={renderProps.disabled}>{loader ? "" : "LOGIN"}</Button>
                                             )}
                                             buttonText="Login"
                                             onSuccess={responseGoogle}
@@ -110,7 +114,7 @@ const Navbar = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
-        </div>
+        </>
     )
 }
 
