@@ -32,6 +32,7 @@ import Jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router'
 import { setCookies, checkCookies } from 'cookies-next';
 import Joi from 'joi'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -56,6 +57,7 @@ const OwnerLogin = () => {
     const [show, setShow] = React.useState(false)
     const [error, setError] = React.useState('');
     const [open, setOpen] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -72,7 +74,7 @@ const OwnerLogin = () => {
     };
 
     const phoneAuth = async () => {
-
+        setLoader(true);
         const loginOwner = Joi.object({
             password: Joi.string().required(),
             phone: Joi.string().length(10).pattern(/^[0-9]+$/).required()
@@ -83,6 +85,7 @@ const OwnerLogin = () => {
 
             setError(error.message);
             setOpen(true);
+            setLoader(false);
             return
         }
 
@@ -92,11 +95,13 @@ const OwnerLogin = () => {
         if (data.data === 'not found') {
             setError('account not found');
             setOpen(true);
+            setLoader(false);
             return;
         }
         if (data.data === 'wrong password') {
             setError('please enter correct password');
             setOpen(true);
+            setLoader(false);
             return;
         }
         setCookies('auth', data.data);
@@ -104,6 +109,7 @@ const OwnerLogin = () => {
         const tokeninfo = Jwt.decode(data.data);
         setCookies('name', tokeninfo.name, { maxAge: 60 * 10 });
         setCookies('id', tokeninfo.mess_id, { maxAge: 60 * 10 });
+        setLoader(false);
         router.push('/dashboard');
     }
 
@@ -189,14 +195,21 @@ const OwnerLogin = () => {
                                 label="Password"
                             />
                         </FormControl>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={phoneAuth}
-                        >
-                            Login
-                        </Button>
+                        {
+                            loader ?
+                                <Box sx={{ display: 'flex', justifyContent: 'center', marginY: 2 }}><CircularProgress color="secondary" /></Box>
+
+                                :
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={phoneAuth}
+                                >
+                                    Login
+                                </Button>
+                        }
+
                         <Grid container>
                             <Grid item xs>
                             </Grid>
