@@ -70,7 +70,7 @@ export default function Home({ messDataItem, dish_item }) {
       </Head>
 
       {
-        messDataItem.length !== 0 ?
+        messDataItem.length === 0 ?
           <>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '47vh' }}>
               <PriorityHighIcon color="primary" sx={{ fontSize: 30 }} />
