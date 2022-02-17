@@ -165,6 +165,20 @@ const Menu = ({ messInfo }) => {
         // axios code
         const data = await axios.post(`${ApiURL}comment`, { "mess_id": messInfo._id, comment }, config);
 
+        // maximum comment limit reached
+        if (data.data === "limit reached") {
+            setComment('');
+            setSnackAlert({
+                type: 'warning',
+                message: 'Maximum Limit Reached'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheComment(true);
+            setComment('');
+            return;
+        }
+
         commentData.push({
             name: getCookie('name'),
             comment: comment
@@ -336,7 +350,7 @@ const Menu = ({ messInfo }) => {
                                                         <PersonIcon color="primary" />
                                                     </ListItemIcon>
                                                     <ListItemText
-                                                        primary="Mahesh Gaikwad"
+                                                        primary={messInfo.owner_info.owner_name.toUpperCase()}
                                                         secondary="Owner Name"
                                                     />
                                                 </ListItemButton>
@@ -347,7 +361,7 @@ const Menu = ({ messInfo }) => {
                                                         <LocalPhoneIcon color="primary" />
                                                     </ListItemIcon>
                                                     <ListItemText
-                                                        primary="2432423513"
+                                                        primary={messInfo.owner_info.owner_phone}
                                                         secondary="Phone Number"
                                                     />
                                                 </ListItemButton>
