@@ -505,8 +505,7 @@ const Menu = ({ messInfo }) => {
                         src={messInfo.menu_image}
                         sx={{ p: 5 }}
                         alt="Picture of the author"
-                        width="100%"
-                        height={500}
+                        layout='fill'
                         onClick={handleClickOpen}
                     />
 
