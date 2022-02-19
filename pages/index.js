@@ -149,7 +149,7 @@ export default function Home({ messDataItem, dish_item }) {
                 filter ?
 
                   messDataItem.filter(messData => messData.mess_name.includes(filter)).map((value, index) => (
-                    <Grid item xs={12} sm={4} md={3} key={index}>
+                    <Grid item xs={12} sm={4} md={3} key={messData._id}>
                       <ItemCard data={value} />
                     </Grid>
                   ))
@@ -158,7 +158,7 @@ export default function Home({ messDataItem, dish_item }) {
 
                   data ?
                     data.map((value, index) => (
-                      <Grid item xs={12} sm={4} md={3} key={index}>
+                      <Grid item xs={12} sm={4} md={3} key={value._id}>
                         <ItemCard data={value} />
                       </Grid>
                     ))
