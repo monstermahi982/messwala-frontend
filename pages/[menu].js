@@ -536,15 +536,6 @@ export async function getServerSideProps({ req, res, query }) {
         }
     }
 
-    const isValid = mongoose.Types.ObjectId.isValid(query.menu);
-    if (!isValid) {
-        return {
-            redirect: {
-                destination: '/invalid-mess',
-                permanent: false,
-            },
-        }
-    }
     const data = await axios.get(`${URL}mess/${query.menu}`, config);
 
     // checking token verfication

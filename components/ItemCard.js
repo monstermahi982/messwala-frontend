@@ -113,7 +113,7 @@ const ItemCard = ({ data }) => {
                         <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data._id}`} title={`Checkout todays menu of ${data.mess_name}.`} >
                             <WhatsappIcon size={20} round={true} />
                         </WhatsappShareButton>
-                        <IconButton aria-label="like" onClick={() => showMenu(data._id)}>
+                        <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>
                             <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
                         </IconButton>
                     </CardActions>
