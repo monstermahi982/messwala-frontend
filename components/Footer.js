@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 function Copyright() {
     return (
@@ -53,7 +54,7 @@ const Footer = () => {
                         <Grid item xs={12} md={4}>
                             <Stack direction="row" spacing={2}>
                                 <IconButton><InstagramIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><FacebookIcon sx={{ color: red[50] }} /></IconButton>
+                                <IconButton><YouTubeIcon sx={{ color: red[50] }} /></IconButton>
                                 <IconButton><TwitterIcon sx={{ color: red[50] }} /></IconButton>
                                 <IconButton><WhatsAppIcon sx={{ color: red[50] }} /></IconButton>
                                 <IconButton><LinkedInIcon sx={{ color: red[50] }} /></IconButton>
