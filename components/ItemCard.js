@@ -104,13 +104,13 @@ const ItemCard = ({ data }) => {
                             <InsertEmoticonIcon sx={{ color: 'green' }} />
                             <Typography sx={{ fontWeight: 'light', fontSize: '15px', mx: 1 }}>{data.like_count}</Typography>
                         </Box>
-                        <TwitterShareButton url={`https://messwala-frontend.vercel.app/${data._id}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
+                        <TwitterShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
                             <TwitterIcon size={20} round={true} />
                         </TwitterShareButton>
-                        <TelegramShareButton url={`https://messwala-frontend.vercel.app/${data._id}`} title={`Checkout todays menu of ${data.mess_name}.`}>
+                        <TelegramShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
                             <TelegramIcon size={20} round={true} />
                         </TelegramShareButton>
-                        <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data._id}`} title={`Checkout todays menu of ${data.mess_name}.`} >
+                        <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
                             <WhatsappIcon size={20} round={true} />
                         </WhatsappShareButton>
                         <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>

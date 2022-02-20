@@ -14,6 +14,8 @@ import MuiAlert from '@mui/material/Alert';
 import { useRouter } from 'next/router'
 import { setCookies, getCookie, removeCookies } from 'cookies-next';
 import CircularProgress from '@mui/material/CircularProgress';
+import MessLogo from '../public/messlogo.svg'
+import Image from 'next/image'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -85,7 +87,7 @@ const Navbar = () => {
                 <AppBar position="fixed">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Link href="/" passHref><Typography sx={{ cursor: 'pointer', fontWeight: '800', fontSize: '20px', letterSpacing: '2px' }} variant="h6" component="div">
-                            Mess Wala
+                            <Image src={MessLogo} width={'100%'} height={50} />
                         </Typography></Link>
                         <Box>
                             {
