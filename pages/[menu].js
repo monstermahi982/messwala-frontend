@@ -25,7 +25,6 @@ import CommentIcon from '@mui/icons-material/Comment';
 import MenuComment from '../components/MenuComment'
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import MoodIcon from '@mui/icons-material/Mood';
-import Badge from '@mui/material/Badge';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -326,159 +325,155 @@ const Menu = ({ messInfo }) => {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Badge badgeContent={4} color="primary" anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}>
-                            <Card sx={{ p: 3 }}>
-                                <CardHeader
-                                    avatar={
-                                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                            {messInfo.thali_price}
-                                        </Avatar>
-                                    }
-                                    sx={{ textAlign: 'center', textTransform: 'capitalize' }}
-                                    title={messInfo.mess_name}
-                                    subheader={messInfo.mess_address}
-                                />
-                                <CardContent>
-                                    <List>
-                                        <Grid container>
-                                            <Grid item xs={12} sm={12} md={12}>
-                                                <ListItemButton>
-                                                    <ListItemIcon>
-                                                        <PersonIcon color="primary" />
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary={messInfo.owner_info.owner_name.toUpperCase()}
-                                                        secondary="Owner Name"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} md={12}>
-                                                <ListItemButton>
-                                                    <ListItemIcon>
-                                                        <LocalPhoneIcon color="primary" />
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary={messInfo.owner_info.owner_phone}
-                                                        secondary="Phone Number"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
-                                            <Grid item xs={6} sm={6} md={6}>
-                                                <ListItemButton>
-                                                    <ListItemIcon>
-                                                        {messInfo.non_veg ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary="Non Veg"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
-                                            <Grid item xs={6} sm={6} md={6}>
-                                                <ListItemButton>
-                                                    <ListItemIcon>
-                                                        {messInfo.parcel_service ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary="Parcel"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
-                                            <Grid item xs={6} sm={6} md={6}>
-                                                <ListItemButton>
-                                                    <ListItemText
-                                                        primary={messInfo.lunch_time}
-                                                        secondary="Lunch Time"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
-                                            <Grid item xs={6} sm={6} md={6}>
-                                                <ListItemButton>
-                                                    <ListItemText
-                                                        primary={messInfo.dinner_time}
-                                                        secondary="Dinner Time"
-                                                    />
-                                                </ListItemButton>
-                                            </Grid>
+
+                        <Card sx={{ p: 3 }}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                        {messInfo.thali_price}
+                                    </Avatar>
+                                }
+                                sx={{ textAlign: 'center', textTransform: 'capitalize' }}
+                                title={messInfo.mess_name}
+                                subheader={messInfo.mess_address}
+                            />
+                            <CardContent>
+                                <List>
+                                    <Grid container>
+                                        <Grid item xs={12} sm={12} md={12}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <PersonIcon color="primary" />
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary={messInfo.owner_info.owner_name.toUpperCase()}
+                                                    secondary="Owner Name"
+                                                />
+                                            </ListItemButton>
                                         </Grid>
-                                    </List>
+                                        <Grid item xs={12} sm={12} md={12}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <LocalPhoneIcon color="primary" />
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary={messInfo.owner_info.owner_phone}
+                                                    secondary="Phone Number"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                        <Grid item xs={6} sm={6} md={6}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    {messInfo.non_veg ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary="Non Veg"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                        <Grid item xs={6} sm={6} md={6}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    {messInfo.parcel_service ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary="Parcel"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                        <Grid item xs={6} sm={6} md={6}>
+                                            <ListItemButton>
+                                                <ListItemText
+                                                    primary={messInfo.lunch_time}
+                                                    secondary="Lunch Time"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                        <Grid item xs={6} sm={6} md={6}>
+                                            <ListItemButton>
+                                                <ListItemText
+                                                    primary={messInfo.dinner_time}
+                                                    secondary="Dinner Time"
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                    </Grid>
+                                </List>
+                            </CardContent>
+                            <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                                {
+                                    actionLoad ?
+                                        <Box sx={{ width: '100%' }}>
+                                            <LinearProgress />
+                                        </Box>
+                                        :
+                                        <>
+                                            <IconButton aria-label="share" onClick={handleLike}>
+                                                <MoodIcon sx={{ color: 'green' }} />
+                                                <Typography sx={{ fontWeight: 'light', mx: 1 }}>{like}</Typography>
+                                            </IconButton>
+                                            <IconButton aria-label="add to favorites" onClick={handleDislike}>
+                                                <MoodBadIcon sx={{ color: 'red' }} />
+                                                <Typography sx={{ fontWeight: 'light', mx: 1 }}>{dislike}</Typography>
+                                            </IconButton>
+                                        </>
+                                }
+
+                            </CardActions>
+
+                            <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 2 }}>
+                                <TextField
+                                    id="input-with-icon-textfield"
+                                    label="Comments"
+                                    value={comment}
+                                    multiline
+
+                                    onChange={(e) => setComment(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <CommentIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    variant="standard"
+                                />
+                                {
+                                    load ?
+                                        <CircularProgress />
+                                        :
+                                        <Button variant="contained" size="small" onClick={handleComment}>add</Button>
+                                }
+
+                                <ExpandMore
+                                    expand={expanded}
+                                    onClick={handleExpandClick}
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
+                                >
+                                    <ExpandMoreIcon />
+                                </ExpandMore>
+                            </Box>
+
+                            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                <CardContent>
+
+                                    {
+                                        commentData.length === 0 ?
+                                            <h3>No Comments...</h3>
+                                            :
+                                            commentData.map((value, index) => (
+                                                <>
+                                                    <MenuComment data={value} key={value._id} />
+                                                </>
+                                            ))
+                                    }
+
+
                                 </CardContent>
-                                <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                    {
-                                        actionLoad ?
-                                            <Box sx={{ width: '100%' }}>
-                                                <LinearProgress />
-                                            </Box>
-                                            :
-                                            <>
-                                                <IconButton aria-label="share" onClick={handleLike}>
-                                                    <MoodIcon sx={{ color: 'green' }} />
-                                                    <Typography sx={{ fontWeight: 'light', mx: 1 }}>{like}</Typography>
-                                                </IconButton>
-                                                <IconButton aria-label="add to favorites" onClick={handleDislike}>
-                                                    <MoodBadIcon sx={{ color: 'red' }} />
-                                                    <Typography sx={{ fontWeight: 'light', mx: 1 }}>{dislike}</Typography>
-                                                </IconButton>
-                                            </>
-                                    }
-
-                                </CardActions>
-
-                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 2 }}>
-                                    <TextField
-                                        id="input-with-icon-textfield"
-                                        label="Comments"
-                                        value={comment}
-                                        multiline
-
-                                        onChange={(e) => setComment(e.target.value)}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <CommentIcon />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        variant="standard"
-                                    />
-                                    {
-                                        load ?
-                                            <CircularProgress />
-                                            :
-                                            <Button variant="contained" size="small" onClick={handleComment}>add</Button>
-                                    }
-
-                                    <ExpandMore
-                                        expand={expanded}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more"
-                                    >
-                                        <ExpandMoreIcon />
-                                    </ExpandMore>
-                                </Box>
-
-                                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                    <CardContent>
-
-                                        {
-                                            commentData.length === 0 ?
-                                                <h3>No Comments...</h3>
-                                                :
-                                                commentData.map((value, index) => (
-                                                    <>
-                                                        <MenuComment data={value} key={value._id} />
-                                                    </>
-                                                ))
-                                        }
-
-
-                                    </CardContent>
-                                </Collapse>
-                            </Card>
-                        </Badge>
+                            </Collapse>
+                        </Card>
                     </Grid>
                 </Grid>
 
