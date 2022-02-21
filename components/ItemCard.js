@@ -10,7 +10,6 @@ import { blue } from '@mui/material/colors';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import Badge from '@mui/material/Badge';
 import { Typography } from '@mui/material';
 import Link from 'next/link'
 import Snackbar from '@mui/material/Snackbar';
@@ -18,9 +17,9 @@ import MuiAlert from '@mui/material/Alert';
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, TwitterIcon, TwitterShareButton } from 'react-share'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import Box from '@mui/material/Box';
-import MessIcon from '../public/sunny.jpeg'
 import { useRouter } from 'next/router';
 import { checkCookies, getCookie, removeCookies } from 'cookies-next';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -51,74 +50,74 @@ const ItemCard = ({ data }) => {
 
     return (
         <>
-            <Badge badgeContent={data.views} color="primary">
+            <Snackbar
+                open={snackStatus}
+                autoHideDuration={6000}
+                onClose={handleAlertAlertClose}
+                message="Note archived"
+            >
+                <Alert onClose={handleAlertAlertClose} severity={snackAlert.type} sx={{ width: '100%' }}>
+                    {snackAlert.message}
+                </Alert>
+            </Snackbar>
+            <Card sx={{ Width: '100%' }}>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgcolor: blue[700] }} aria-label="recipe">
+                            {data.thali_price}
+                        </Avatar>
+                    }
+                    sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h1.fontSize', textTransform: 'capitalize' }}
+                    title={data.mess_name}
+                    subheader={data.mess_address.slice(0, 30) + '...'}
+                />
+                <CardMedia
+                    component="img"
+                    height="80"
+                    image={data.mess_poster}
+                    alt="Paella dish"
+                />
+                <CardContent>
+                    <Stack direction="row" sx={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }} spacing={1}>
+                        {
+                            data.menu_list.length === 0 ?
+                                <>
+                                    <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available</Typography>
+                                </>
+                                :
+                                data.menu_list.map((value, index) => (
+                                    <Box key={index}>
+                                        <Chip label={value.dish_name} variant="outlined" size="small" sx={{ my: 1 }} />
+                                    </Box>
 
-                <Snackbar
-                    open={snackStatus}
-                    autoHideDuration={6000}
-                    onClose={handleAlertAlertClose}
-                    message="Note archived"
-                >
-                    <Alert onClose={handleAlertAlertClose} severity={snackAlert.type} sx={{ width: '100%' }}>
-                        {snackAlert.message}
-                    </Alert>
-                </Snackbar>
-
-                <Card sx={{ Width: '100%' }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: blue[700] }} aria-label="recipe">
-                                {data.thali_price}
-                            </Avatar>
+                                ))
                         }
-                        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h1.fontSize', textTransform: 'capitalize' }}
-                        title={data.mess_name}
-                        subheader={data.mess_address.slice(0, 30) + '...'}
-                    />
-                    <CardMedia
-                        component="img"
-                        height="80"
-                        image={data.mess_poster}
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Stack direction="row" sx={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }} spacing={1}>
-                            {
-                                data.menu_list.length === 0 ?
-                                    <>
-                                        <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available</Typography>
-                                    </>
-                                    :
-                                    data.menu_list.map((value, index) => (
-                                        <Box key={index}>
-                                            <Chip label={value.dish_name} variant="outlined" size="small" sx={{ my: 1 }} />
-                                        </Box>
-
-                                    ))
-                            }
-                            <Chip label="more" variant="outlined" size="small" sx={{ my: 1 }} />
-                        </Stack>
-                    </CardContent>
-                    <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <Box sx={{ display: 'flex' }}>
-                            <InsertEmoticonIcon sx={{ color: 'green' }} />
-                            <Typography sx={{ fontWeight: 'light', fontSize: '15px', mx: 1 }}>{data.like_count}</Typography>
-                        </Box>
-                        <TwitterShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
-                            <TwitterIcon size={20} round={true} />
-                        </TwitterShareButton>
-                        <TelegramShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
-                            <TelegramIcon size={20} round={true} />
-                        </TelegramShareButton>
-                        <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
-                            <WhatsappIcon size={20} round={true} />
-                        </WhatsappShareButton>
-                        <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>
-                            <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
-                        </IconButton>
-                    </CardActions>
-                </Card>
-            </Badge>
+                        <Chip label="more" variant="outlined" size="small" sx={{ my: 1 }} />
+                    </Stack>
+                </CardContent>
+                <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <Box sx={{ display: 'flex' }}>
+                        <InsertEmoticonIcon sx={{ color: 'green' }} />
+                        <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.like_count}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                        <VisibilityIcon sx={{ color: 'red' }} />
+                        <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
+                    </Box>
+                    <TwitterShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
+                        <TwitterIcon size={20} round={true} />
+                    </TwitterShareButton>
+                    <TelegramShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
+                        <TelegramIcon size={20} round={true} />
+                    </TelegramShareButton>
+                    <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
+                        <WhatsappIcon size={20} round={true} />
+                    </WhatsappShareButton>
+                    <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>
+                        <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
+                    </IconButton>
+                </CardActions>
+            </Card>
         </>
     )
 }
