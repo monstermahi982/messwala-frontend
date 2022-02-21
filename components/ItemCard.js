@@ -104,13 +104,13 @@ const ItemCard = ({ data }) => {
                         <VisibilityIcon sx={{ color: 'red' }} />
                         <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
                     </Box>
-                    <TwitterShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
+                    <TwitterShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
                         <TwitterIcon size={20} round={true} />
                     </TwitterShareButton>
-                    <TelegramShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
+                    <TelegramShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
                         <TelegramIcon size={20} round={true} />
                     </TelegramShareButton>
-                    <WhatsappShareButton url={`https://messwala-frontend.vercel.app/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
+                    <WhatsappShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
                         <WhatsappIcon size={20} round={true} />
                     </WhatsappShareButton>
                     <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>
