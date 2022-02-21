@@ -39,7 +39,7 @@ const Navbar = () => {
         setLoader(true);
         const data = await axios.post(`${URL}user/login`, { email: profileObj.email });
         if (data.data === "user not found") {
-            setAlertMessage({ message: "email not found", status: "error" })
+            setAlertMessage({ message: "Account not found!... Please Register", status: "error" })
             setAlert(true);
             return setLoader(false);
         } if (data.data === "your account is blocked") {
@@ -60,7 +60,7 @@ const Navbar = () => {
         removeCookies('auth');
         removeCookies('name');
         setUserAuth(false);
-        setAlertMessage({ message: "visit us again", status: "warning" })
+        setAlertMessage({ message: "Thank you ..,.. visit us again", status: "warning" })
         setAlert(true);
         router.push('/')
     }
