@@ -533,7 +533,7 @@ export async function getServerSideProps({ req, res, query }) {
     const data = await axios.get(`${URL}mess/${query.menu}`, config);
 
     // checking token verfication
-    if (data.data === "token not found" || data.data === "not verified") {
+    if (data.data === "token not found" || data.data === "not verified" || data.data === "mess not found") {
         return {
             redirect: {
                 destination: '/invalid-mess',
