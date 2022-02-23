@@ -101,7 +101,7 @@ const Navbar = () => {
                                     <>
                                         <Link href="/auth/register" passHref><Button sx={{ px: 3 }} color="inherit">Signup</Button></Link>
                                         <GoogleLogin
-                                            clientId="716248828673-kjpok8rlfaqv95m46vpjuk55hc6tpjso.apps.googleusercontent.com"
+                                            clientId={process.env.NEXT_PUBLIC_GOOGLE_URL}
                                             render={renderProps => (
                                                 <Button variant="contained" endIcon={loader ? <> <CircularProgress size={30} color="secondary" /> </> : <><GoogleIcon color="error" /> </>} onClick={renderProps.onClick} disabled={renderProps.disabled}>{loader ? "" : "LOGIN"}</Button>
                                             )}
