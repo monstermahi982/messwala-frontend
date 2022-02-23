@@ -6,7 +6,6 @@ import Link from '@mui/material/Link';
 import { red } from '@mui/material/colors';
 import Grid from '@mui/material/Grid';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Stack from '@mui/material/Stack';
@@ -53,12 +52,12 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Stack direction="row" spacing={2}>
-                                <IconButton><InstagramIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><YouTubeIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><TwitterIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><WhatsAppIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><LinkedInIcon sx={{ color: red[50] }} /></IconButton>
-                                <IconButton><TelegramIcon sx={{ color: red[50] }} /></IconButton>
+                                <a href={"https://www.instagram.com/messwala.online/"} target={"_blank"}><IconButton><InstagramIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <a href={"https://www.youtube.com/channel/UC4F42ykasamJNXa8qrwrW9w"} target={"_blank"}><IconButton><YouTubeIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <a href={"https://twitter.com/maheshg78239999"} target={"_blank"}><IconButton><TwitterIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <a href={"https://chat.whatsapp.com/EE7diVgkNf9GJ5RHzb0yQq"} target={"_blank"}><IconButton><WhatsAppIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <a href={"https://www.linkedin.com/company/messwala"} target={"_blank"}><IconButton><LinkedInIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <a href={"https://t.me/messwala"} target={"_blank"}><IconButton><TelegramIcon sx={{ color: red[50] }} /></IconButton></a>
                             </Stack>
                         </Grid>
                     </Grid>
