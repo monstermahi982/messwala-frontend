@@ -126,7 +126,7 @@ const Register = () => {
                     <Box sx={{ my: 2 }}>
                         <GoogleLogin
                             disabled={email ? true : false}
-                            clientId="716248828673-kjpok8rlfaqv95m46vpjuk55hc6tpjso.apps.googleusercontent.com"
+                            clientId={process.env.NEXT_PUBLIC_GOOGLE_URL}
                             render={renderProps => (
                                 <Button variant="contained" color="primary" startIcon={<GoogleIcon color="error" />} onClick={renderProps.onClick} disabled={renderProps.disabled}>register with Google</Button>
                             )}

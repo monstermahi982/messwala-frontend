@@ -140,7 +140,7 @@ const OwnerLogin = () => {
 
                     <Box sx={{ my: 2 }}>
                         <GoogleLogin
-                            clientId="716248828673-kjpok8rlfaqv95m46vpjuk55hc6tpjso.apps.googleusercontent.com"
+                            clientId={process.env.NEXT_PUBLIC_GOOGLE_URL}
                             render={renderProps => (
                                 <Button variant="contained" color="primary" startIcon={<GoogleIcon color="error" />} onClick={renderProps.onClick} disabled={renderProps.disabled}>register with Google</Button>
                             )}
