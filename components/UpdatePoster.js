@@ -22,7 +22,7 @@ const Input = styled('input')({
 });
 const UpdatePoster = ({ data }) => {
     const ApiURL = process.env.NEXT_PUBLIC_URL;
-    const [poster, setPoster] = React.useState(posterImageAs)
+    const [poster, setPoster] = React.useState(data.mess_poster)
     const [posterImage, setPosterImage] = React.useState('');
     const [alert, setAlert] = React.useState(true)
     const [alertMess, setAlertMess] = React.useState({})
