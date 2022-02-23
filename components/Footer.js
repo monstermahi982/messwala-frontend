@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import { red } from '@mui/material/colors';
 import Grid from '@mui/material/Grid';
 import InstagramIcon from '@mui/icons-material/Instagram';
