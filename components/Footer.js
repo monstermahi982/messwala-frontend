@@ -52,12 +52,12 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Stack direction="row" spacing={2}>
-                                <a href={"https://www.instagram.com/messwala.online/"} target={"_blank"}><IconButton><InstagramIcon sx={{ color: red[50] }} /></IconButton></a>
-                                <a href={"https://www.youtube.com/channel/UC4F42ykasamJNXa8qrwrW9w"} target={"_blank"}><IconButton><YouTubeIcon sx={{ color: red[50] }} /></IconButton></a>
-                                <a href={"https://twitter.com/maheshg78239999"} target={"_blank"}><IconButton><TwitterIcon sx={{ color: red[50] }} /></IconButton></a>
-                                <a href={"https://chat.whatsapp.com/EE7diVgkNf9GJ5RHzb0yQq"} target={"_blank"}><IconButton><WhatsAppIcon sx={{ color: red[50] }} /></IconButton></a>
-                                <a href={"https://www.linkedin.com/company/messwala"} target={"_blank"}><IconButton><LinkedInIcon sx={{ color: red[50] }} /></IconButton></a>
-                                <a href={"https://t.me/messwala"} target={"_blank"}><IconButton><TelegramIcon sx={{ color: red[50] }} /></IconButton></a>
+                                <Link href={"https://www.instagram.com/messwala.online/"} passHref><a target={"_blank"}><IconButton><InstagramIcon sx={{ color: red[50] }} /></IconButton></a></Link>
+                                <Link href={"https://www.youtube.com/channel/UC4F42ykasamJNXa8qrwrW9w"} passHref><a target={"_blank"}><IconButton><YouTubeIcon sx={{ color: red[50] }} /></IconButton></a></Link>
+                                <Link href={"https://twitter.com/maheshg78239999"}><a target={"_blank"}><IconButton><TwitterIcon sx={{ color: red[50] }} /></IconButton></a></Link>
+                                <Link href={"https://chat.whatsapp.com/EE7diVgkNf9GJ5RHzb0yQq"} passHref><a target={"_blank"}><IconButton><WhatsAppIcon sx={{ color: red[50] }} /></IconButton></a></Link>
+                                <Link href={"https://www.linkedin.com/company/messwala"} passHref><a target={"_blank"}><IconButton><LinkedInIcon sx={{ color: red[50] }} /></IconButton></a></Link>
+                                <Link href={"https://t.me/messwala"} passHref><a target={"_blank"}><IconButton><TelegramIcon sx={{ color: red[50] }} /></IconButton></a></Link>
                             </Stack>
                         </Grid>
                     </Grid>
