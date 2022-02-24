@@ -41,12 +41,12 @@ export default function Home({ messDataItem, dish_item }) {
   };
 
   const PageMenu = async () => {
-    if (page * 5 - 1 > messDataItem.length) {
+    if (page * 10 - 1 > messDataItem.length) {
 
-      setData(messDataItem.slice(page * 5 - 5, messDataItem.length));
+      setData(messDataItem.slice(page * 10 - 10, messDataItem.length));
 
     } else {
-      setData(messDataItem.slice(page * 5 - 5, page * 5))
+      setData(messDataItem.slice(page * 10 - 10, page * 10))
     }
   }
 
