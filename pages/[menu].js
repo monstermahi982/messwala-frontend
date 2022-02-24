@@ -297,8 +297,11 @@ const Menu = ({ messInfo }) => {
     return (
         <>
             <Head>
-                <title>Mess Wala :- {messInfo.mess_name}</title>
-                <meta name="description" content="Sunny Mess" />
+                <title>Mess Wala : {messInfo.mess_name}</title>
+                <meta name="description" content="online mess menu viewing platform" />
+                <meta name="keywords" content="messwala, cattering services, sunny mess, vitthal mess, sinhgad campus, online messwala, messwala online, messwala menus, messwala mess" />
+                <meta name="robots" content="index, follow" />
+                <meta name="language" content="English" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Box sx={{ flexGrow: 1, p: 3 }}>

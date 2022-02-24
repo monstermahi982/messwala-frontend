@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -49,7 +50,7 @@ const Register = () => {
         setLoader(true);
         const register = Joi.object({
             email: Joi.string().email({ tlds: { allow: false } }).required(),
-            name: Joi.string().min(5).max(15).required(),
+            name: Joi.string().min(5).max(40).required(),
             phone: Joi.string().length(10).pattern(/^[0-9]+$/).required()
         })
 
@@ -99,6 +100,15 @@ const Register = () => {
 
     return (
         <ThemeProvider theme={theme}>
+
+            <Head>
+                <title>Mess Wala : register</title>
+                <meta name="description" content="online mess menu viewing platform" />
+                <meta name="keywords" content="messwala, cattering services, sunny mess, vitthal mess, sinhgad campus, online messwala, messwala online, messwala menus, messwala mess" />
+                <meta name="robots" content="index, follow" />
+                <meta name="language" content="English" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>{error}</Alert>
             </Snackbar>
