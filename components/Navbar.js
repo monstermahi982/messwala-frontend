@@ -48,8 +48,8 @@ const Navbar = () => {
             return setLoader(false);;
         }
         const token = await Jwt.decode(data.data);
-        setCookies('auth', data.data, { maxAge: 60 * 10 });
-        setCookies('name', token.name, { maxAge: 60 * 10 });
+        setCookies('auth', data.data, { maxAge: 60 * 60 * 11 });
+        setCookies('name', token.name, { maxAge: 60 * 60 * 11 });
         setUserAuth(true)
         setAlertMessage({ message: `welcome back ${token.name}`, status: "success" })
         setAlert(true);
@@ -70,7 +70,7 @@ const Navbar = () => {
         const token = getCookie('auth');
         if (token) {
             const tokenData = Jwt.decode(token);
-            setCookies('name', tokenData.name);
+            setCookies('name', tokenData.name, { maxAge: 60 * 60 * 11 });
             setUserAuth(true);
         }
 
@@ -87,7 +87,7 @@ const Navbar = () => {
                 <AppBar position="fixed">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Link href="/" passHref><Typography sx={{ cursor: 'pointer', fontWeight: '800', fontSize: '20px', letterSpacing: '2px' }} variant="h6" component="div">
-                            <Image src={MessLogo} width={'100%'} height={50} />
+                            <Image src={MessLogo} alt="mess-poster" width={'100%'} height={50} />
                         </Typography></Link>
                         <Box>
                             {

@@ -104,11 +104,11 @@ const OwnerLogin = () => {
             setLoader(false);
             return;
         }
-        setCookies('auth', data.data);
+        setCookies('auth', data.data, { maxAge: 60 * 60 * 11 });
 
         const tokeninfo = Jwt.decode(data.data);
-        setCookies('name', tokeninfo.name, { maxAge: 60 * 10 });
-        setCookies('id', tokeninfo.mess_id, { maxAge: 60 * 10 });
+        setCookies('name', tokeninfo.name, { maxAge: 60 * 60 * 11 });
+        setCookies('id', tokeninfo.mess_id, { maxAge: 60 * 60 * 11 });
         setLoader(false);
         router.push('/dashboard');
     }

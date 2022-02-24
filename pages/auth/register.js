@@ -83,9 +83,9 @@ const Register = () => {
             return;
         }
 
-        setCookies('auth', data.data, { maxAge: 60 * 10 })
+        setCookies('auth', data.data, { maxAge: 60 * 60 * 11 })
         const token = Jwt.decode(data.data);
-        setCookies('name', token.name, { maxAge: 60 * 10 });
+        setCookies('name', token.name, { maxAge: 60 * 60 * 11 });
         setLoader(false);
         router.push('/');
     }
