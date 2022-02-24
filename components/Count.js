@@ -25,14 +25,14 @@ const Count = () => {
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <MenuBookIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={5} end={5} />
+                        <CountUp duration={10} end={2} />
                     </Typography>
                     <Typography>Total Messes</Typography>
                 </Paper>
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <VisibilityIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={100} />
+                        <CountUp duration={10} end={60} />
                     </Typography>
                     <Typography>Daily Views</Typography>
                 </Paper>
