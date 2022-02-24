@@ -69,20 +69,21 @@ const ItemCard = ({ data }) => {
                     }
                     sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h1.fontSize', textTransform: 'capitalize' }}
                     title={data.mess_name}
-                    subheader={data.mess_address.slice(0, 30) + '...'}
+                    subheader={data.mess_address.slice(0, 25) + '...'}
                 />
                 <CardMedia
                     component="img"
                     height="80"
                     image={data.mess_poster}
-                    alt="Paella dish"
+                    alt={data.mess_name}
+                    sx={{ width: '100%', height: '120px' }}
                 />
                 <CardContent>
                     <Stack direction="row" sx={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }} spacing={1}>
                         {
                             data.menu_list.length === 0 ?
                                 <>
-                                    <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available</Typography>
+                                    <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available...</Typography>
                                 </>
                                 :
                                 data.menu_list.map((value, index) => (
