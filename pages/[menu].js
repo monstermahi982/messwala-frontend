@@ -41,6 +41,7 @@ import mongoose from 'mongoose'
 import axios from 'axios'
 import { URL } from '../config'
 import { checkCookies, getCookie } from 'cookies-next';
+import Jwt from 'jsonwebtoken';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -105,6 +106,8 @@ const Menu = ({ messInfo }) => {
         headers: { Authorization: `Bearer ${getCookie('auth')}` }
     };
 
+    const tokenCheck = Jwt.decode(getCookie('auth'));
+
     // handling comment logic
     const handleComment = async () => {
 
@@ -161,8 +164,35 @@ const Menu = ({ messInfo }) => {
 
         }
 
+        if (tokenCheck === null) {
+            setComment('');
+            setSnackAlert({
+                type: 'warning',
+                message: 'Something went Wrong'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheComment(true);
+            setComment('');
+            return;
+        }
+
         // axios code
         const data = await axios.post(`${ApiURL}comment`, { "mess_id": messInfo._id, comment }, config);
+
+        // maximum comment limit reached
+        if (data.data === "not verified" || data.data === "jwt malformed") {
+            setComment('');
+            setSnackAlert({
+                type: 'warning',
+                message: 'Something went Wrong'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheComment(true);
+            setComment('');
+            return;
+        }
 
         // maximum comment limit reached
         if (data.data === "limit reached") {
@@ -228,10 +258,32 @@ const Menu = ({ messInfo }) => {
         setActionLoad(true)
 
         //axios code
-        if (!token) {
+        if (!token || tokenCheck === null) {
+            setSnackAlert({
+                type: 'warning',
+                message: 'Something went Wrong'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheAction(true);
+            setActionLoad(false)
             return;
         }
+
         const data = await axios.post(`${ApiURL}action/like`, { "mess_id": messInfo._id }, config);
+        console.log(data)
+        // maximum comment limit reached
+        if (data.data === "not verified" || data.data.message === "jwt malformed") {
+            setSnackAlert({
+                type: 'warning',
+                message: 'Something went Wrong'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheAction(true);
+            setActionLoad(false)
+            return;
+        }
 
         setLike(like + 1);
         setSnackAlert({
@@ -277,9 +329,18 @@ const Menu = ({ messInfo }) => {
         setActionLoad(true)
 
         //axios code
-        if (!token) {
+        if (!token || tokenCheck === null) {
+            setSnackAlert({
+                type: 'warning',
+                message: 'Something went Wrong'
+            })
+            setsnackStatus(true)
+            setLoad(false)
+            setCacheAction(true);
+            setActionLoad(false)
             return;
         }
+
         const data = await axios.post(`${ApiURL}action/dislike`, { "mess_id": messInfo._id }, config);
 
         setDisLike(dislike + 1);
@@ -519,21 +580,21 @@ export default Menu;
 export async function getServerSideProps({ req, res, query }) {
 
     // header file
-    const config = {
-        headers: { Authorization: `Bearer ${getCookie('auth', { req, res })}` }
-    };
+    // const config = {
+    //     headers: { Authorization: `Bearer ${getCookie('auth', { req, res })}` }
+    // };
 
-    const token = checkCookies('auth', { req, res });
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/auth/register',
-                permanent: false,
-            },
-        }
-    }
+    // const token = checkCookies('auth', { req, res });
+    // if (!token) {
+    //     return {
+    //         redirect: {
+    //             destination: '/auth/register',
+    //             permanent: false,
+    //         },
+    //     }
+    // }
 
-    const data = await axios.get(`${URL}mess/${query.menu}`, config);
+    const data = await axios.get(`${URL}mess/${query.menu}`);
 
     // checking token verfication
     if (data.data === "token not found" || data.data === "not verified" || data.data === "mess not found") {
