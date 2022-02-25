@@ -51,7 +51,7 @@ const Register = () => {
         const register = Joi.object({
             email: Joi.string().email({ tlds: { allow: false } }).required(),
             name: Joi.string().min(5).max(40).required(),
-            phone: Joi.string().length(10).pattern(/^[0-9]+$/).required()
+            phone: Joi.string().pattern(/^[0-9]+$/).allow('').length(10)
         })
 
         const { error } = register.validate({ name, email, phone });
@@ -178,10 +178,9 @@ const Register = () => {
                                 />
                                 <TextField
                                     margin="normal"
-                                    required
                                     fullWidth
                                     id="phone"
-                                    label="Phone"
+                                    label="Phone (optional)"
                                     name="phone"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
