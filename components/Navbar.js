@@ -68,10 +68,13 @@ const Navbar = () => {
     React.useEffect(() => {
 
         const token = getCookie('auth');
-        if (token) {
+        const name = getCookie('name');
+        if (token && name) {
             const tokenData = Jwt.decode(token);
-            setCookies('name', tokenData.name, { maxAge: 60 * 60 * 11 });
-            setUserAuth(true);
+            if (tokenData !== null) {
+                setCookies('name', tokenData.name, { maxAge: 60 * 60 * 11 });
+                setUserAuth(true);
+            }
         }
 
     }, [])
