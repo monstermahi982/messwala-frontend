@@ -39,12 +39,12 @@ const ItemCard = ({ data }) => {
 
     // redirect user to mess page if token is present 
     const showMenu = (id) => {
-        const token = checkCookies('auth');
-        if (!token) {
-            setSnackAlert({ message: "please login first", type: "warning" });
-            setsnackStatus(true);
-            return;
-        }
+        // const token = checkCookies('auth');
+        // if (!token) {
+        //     setSnackAlert({ message: "please login first", type: "warning" });
+        //     setsnackStatus(true);
+        //     return;
+        // }
         router.push(`/${id}`);
     }
 
