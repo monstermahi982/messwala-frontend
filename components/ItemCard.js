@@ -20,6 +20,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { checkCookies, getCookie, removeCookies } from 'cookies-next';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Button from '@mui/material/Button';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -114,9 +115,9 @@ const ItemCard = ({ data }) => {
                     <WhatsappShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
                         <WhatsappIcon size={20} round={true} />
                     </WhatsappShareButton>
-                    <IconButton aria-label="like" onClick={() => showMenu(data.slug)}>
+                    <Button variant="outlined" aria-label="like" onClick={() => showMenu(data.slug)}>
                         <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
-                    </IconButton>
+                    </Button>
                 </CardActions>
             </Card>
         </>
