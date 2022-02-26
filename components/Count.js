@@ -18,7 +18,7 @@ const Count = () => {
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <GroupAddIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={30} />
+                        <CountUp duration={10} end={45} />
                     </Typography>
                     <Typography>Total Users</Typography>
                 </Paper>
@@ -32,7 +32,7 @@ const Count = () => {
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <VisibilityIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={60} />
+                        <CountUp duration={10} end={135} />
                     </Typography>
                     <Typography>Daily Views</Typography>
                 </Paper>
