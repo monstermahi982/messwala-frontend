@@ -78,7 +78,7 @@ export default function Home({ messDataItem, dish_item }) {
             <Typography color="primary" sx={{ fontSize: '40px', letterSpacing: '4px', fontWeight: '900', textAlign: 'center' }}>Welcome to <strong>MESSWALA</strong> </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '38vh' }}>
               <PriorityHighIcon color="primary" sx={{ fontSize: 30 }} />
-              <Typography color="primary" sx={{ fontSize: '20px', letterSpacing: '4px', fontWeight: '700', textAlign: 'center' }}>No menus available..,checkout after 11 AM or 6PM.</Typography>
+              <Typography color="primary" sx={{ fontSize: '20px', letterSpacing: '4px', fontWeight: '700', textAlign: 'center' }}>No menus available..,checkout after 12 PM or 7PM.</Typography>
             </Box>
           </>
           :
