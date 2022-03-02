@@ -29,6 +29,10 @@ const theme = createTheme();
 
 const Register = () => {
     const router = useRouter();
+
+    // refer id
+    const { refer_id } = router.query;
+
     const URL = process.env.NEXT_PUBLIC_URL;
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -38,6 +42,7 @@ const Register = () => {
     const [open, setOpen] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
     const [showField, setShowfield] = React.useState(false);
+    const [refer, setRefer] = React.useState(refer_id ? refer_id : "");
 
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
@@ -51,10 +56,11 @@ const Register = () => {
         const register = Joi.object({
             email: Joi.string().email({ tlds: { allow: false } }).required(),
             name: Joi.string().min(5).max(40).required(),
-            phone: Joi.string().pattern(/^[0-9]+$/).allow('').length(10)
+            phone: Joi.string().pattern(/^[0-9]+$/).allow('').length(10),
+            refer: Joi.string().allow('')
         })
 
-        const { error } = register.validate({ name, email, phone });
+        const { error } = register.validate({ name, email, phone, refer });
         if (error) {
             setError(error.message);
             setOpen(true);
@@ -63,7 +69,7 @@ const Register = () => {
         }
 
         const user = {
-            email, name, phone
+            email, name, phone, refer_id: refer
         }
 
         // sending data to server
@@ -87,6 +93,7 @@ const Register = () => {
         setCookies('auth', data.data, { maxAge: 60 * 60 * 11 })
         const token = Jwt.decode(data.data);
         setCookies('name', token.name, { maxAge: 60 * 60 * 11 });
+        setCookies('refer_id', token.refer_id, { maxAge: 60 * 60 * 11 });
         setLoader(false);
         router.push('/');
     }
@@ -188,6 +195,18 @@ const Register = () => {
                                     autoFocus
                                     disabled={data ? false : true}
                                     type="number"
+                                />
+                                <TextField
+                                    margin="normal"
+                                    fullWidth
+                                    id="name"
+                                    label="Refer Id (optional)"
+                                    name="refer_id"
+                                    autoComplete="refer_id"
+                                    autoFocus
+                                    value={refer}
+                                    onChange={(e) => setRefer(e.target.value)}
+                                    disabled={data ? false : true}
                                 />
                                 {
                                     loader ?
