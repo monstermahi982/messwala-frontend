@@ -20,6 +20,12 @@ import Count from '../components/Count'
 import axios from 'axios'
 import { URL } from '../config'
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import IconButton from '@mui/material/IconButton';
+import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon, TwitterIcon, TwitterShareButton } from 'react-share'
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import CardActions from '@mui/material/CardActions';
+import { setCookies, getCookie, removeCookies } from 'cookies-next';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -35,6 +41,8 @@ export default function Home({ messDataItem, dish_item }) {
   const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState([])
   const [filter, setFilter] = React.useState('');
+  const [refer, setRefer] = React.useState(getCookie('refer_id'));
+  const [name, setName] = React.useState(getCookie('name'));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -145,6 +153,28 @@ export default function Home({ messDataItem, dish_item }) {
 
 
                   </CardContent>
+
+                  {
+                    refer && name
+                      ?
+                      <>
+                        <Typography sx={{ textAlign: 'center' }}>Refer Id :- {refer}</Typography>
+                        <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                          <TwitterShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} hashtags={['messwala', 'referral messwala', 'joinmesswala', 'OnlineMenu']}>
+                            <TwitterIcon size={20} round={true} />
+                          </TwitterShareButton>
+                          <TelegramShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`}>
+                            <TelegramIcon size={20} round={true} />
+                          </TelegramShareButton>
+                          <WhatsappShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} >
+                            <WhatsappIcon size={20} round={true} />
+                          </WhatsappShareButton>
+                        </CardActions>
+
+                      </>
+                      : ""
+                  }
+
                 </Card>
               </Grid>
 

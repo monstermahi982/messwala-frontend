@@ -50,6 +50,7 @@ const Navbar = () => {
         const token = await Jwt.decode(data.data);
         setCookies('auth', data.data, { maxAge: 60 * 60 * 11 });
         setCookies('name', token.name, { maxAge: 60 * 60 * 11 });
+        setCookies('refer_id', token.refer_id, { maxAge: 60 * 60 * 11 });
         setUserAuth(true)
         setAlertMessage({ message: `welcome back ${token.name}`, status: "success" })
         setAlert(true);
