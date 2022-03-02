@@ -136,12 +136,14 @@ const Referral = ({ refer_offer, refer_user }) => {
             } catch (error) { }
 
         }
+    }
 
-        React.useEffect(() => {
+    React.useEffect(() => {
+        if (Object.keys(refer_offer).length !== 0) {
             countView();
             return countView;
-        }, [])
-    }
+        }
+    }, [])
 
     return (
         <>
@@ -180,7 +182,7 @@ const Referral = ({ refer_offer, refer_user }) => {
                                 <TableBody>
                                     {
                                         refer_user.map((data, index) => (
-                                            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                            <TableRow key={data._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                                 <TableCell align="center">{index + 1}</TableCell>
                                                 <TableCell align="center">{data.name}</TableCell>
                                                 <TableCell align="center">{data.refer_id}</TableCell>
