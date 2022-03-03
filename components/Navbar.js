@@ -60,6 +60,7 @@ const Navbar = () => {
     const logout = () => {
         removeCookies('auth');
         removeCookies('name');
+        removeCookies('refer_id');
         setUserAuth(false);
         setAlertMessage({ message: "Thank you ..,.. visit us again", status: "warning" })
         setAlert(true);
