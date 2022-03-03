@@ -26,6 +26,7 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CardActions from '@mui/material/CardActions';
 import { setCookies, getCookie, removeCookies } from 'cookies-next';
+import Link from 'next/link'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -80,27 +81,19 @@ export default function Home({ messDataItem, dish_item }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {
-        messDataItem.length === 0 ?
-          <>
-            <Typography color="primary" sx={{ fontSize: '40px', letterSpacing: '4px', fontWeight: '900', textAlign: 'center' }}>Welcome to <strong>MESSWALA</strong> </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '38vh' }}>
-              <PriorityHighIcon color="primary" sx={{ fontSize: 30 }} />
-              <Typography color="primary" sx={{ fontSize: '20px', letterSpacing: '4px', fontWeight: '700', textAlign: 'center' }}>No menus available..,checkout after 12 PM or 7PM.</Typography>
-            </Box>
-          </>
-          :
-          <>
-            <Grid container spacing={2} sx={{ p: 2 }}>
-              <Grid item xs={12} sm={4} md={3}>
-                <Card sx={{ Width: '100%' }}>
-                  <CardHeader
-                    sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h6.fontSize', m: 0, p: 0, pt: 2 }}
-                    title="Filter"
-                  />
-                  <CardContent>
-                    <TextField onChange={(e) => setFilter(e.target.value)} value={filter} size="small" sx={{ mb: 1 }} fullWidth id="messname" label="Mess Name" variant="outlined" />
+      <Grid container spacing={2} sx={{ p: 2 }}>
+        <Grid item xs={12} sm={4} md={3}>
+          <Card sx={{ Width: '100%' }}>
+            <CardHeader
+              sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h6.fontSize', m: 0, p: 0, pt: 2 }}
+              title="Filter"
+            />
+            <CardContent>
+              <TextField onChange={(e) => setFilter(e.target.value)} value={filter} size="small" sx={{ mb: 1 }} fullWidth id="messname" label="Mess Name" variant="outlined" />
 
+              {
+                refer && name ? "" :
+                  <>
                     <Autocomplete
                       sx={{ mb: 1, width: '100%' }}
                       multiple
@@ -150,67 +143,79 @@ export default function Home({ messDataItem, dish_item }) {
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                       <Button disabled size="small" variant="contained" onClick={() => setLoad(true)}>Comming Soon</Button>
                     </Box>
-
-
-                  </CardContent>
-
-                  {
-                    refer && name
-                      ?
-                      <>
-                        <Typography sx={{ textAlign: 'center' }}>Refer Id :- {refer}</Typography>
-                        <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                          <TwitterShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} hashtags={['messwala', 'referral messwala', 'joinmesswala', 'OnlineMenu']}>
-                            <TwitterIcon size={20} round={true} />
-                          </TwitterShareButton>
-                          <TelegramShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`}>
-                            <TelegramIcon size={20} round={true} />
-                          </TelegramShareButton>
-                          <WhatsappShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} >
-                            <WhatsappIcon size={20} round={true} />
-                          </WhatsappShareButton>
-                        </CardActions>
-
-                      </>
-                      : ""
-                  }
-
-                </Card>
-              </Grid>
-
-              {
-
-                filter ?
-
-                  messDataItem.filter((messData) => messData.mess_name.includes(filter)).map((value, index) => (
-                    <Grid item xs={12} sm={4} md={3} key={value._id}>
-                      <ItemCard data={value} />
-                    </Grid>
-                  ))
-
-                  :
-
-                  data ?
-                    data.map((value, index) => (
-                      <Grid item xs={12} sm={4} md={3} key={value._id}>
-                        <ItemCard data={value} />
-                      </Grid>
-                    ))
-                    :
-                    "not thing is there"
-
+                  </>
               }
 
-            </Grid>
+            </CardContent>
 
             {
-              filter ? "" : <Stack spacing={2} sx={{ display: 'grid', justifyContent: 'center', py: 3 }}>
-                <Pagination count={PageCount} page={page} onChange={handlePageChange} color="primary" size="large" />
-              </Stack>
+              refer && name
+                ?
+                <>
+                  <Typography sx={{ textAlign: 'center', py: 1, mx: 3, my: 1, border: 3, borderColor: 'primary.main', boxShadow: 3 }}>Refer Id :- {refer}</Typography>
+                  <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <TwitterShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} hashtags={['messwala', 'referral messwala', 'joinmesswala', 'OnlineMenu']}>
+                      <TwitterIcon size={20} round={true} />
+                    </TwitterShareButton>
+                    <TelegramShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`}>
+                      <TelegramIcon size={20} round={true} />
+                    </TelegramShareButton>
+                    <WhatsappShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} >
+                      <WhatsappIcon size={20} round={true} />
+                    </WhatsappShareButton>
+                    <Link href={"/referral"} passHref><Button variant="outlined" aria-label="view">
+                      <VisibilityIcon sx={{ color: 'red' }} />
+                    </Button></Link>
+                  </CardActions>
+
+                </>
+                : ""
             }
 
-          </>
+          </Card>
+        </Grid>
+
+        {
+
+          messDataItem.length !== 0 ?
+
+            filter ?
+
+              messDataItem.filter((messData) => messData.mess_name.includes(filter)).map((value, index) => (
+                <Grid item xs={12} sm={4} md={3} key={value._id}>
+                  <ItemCard data={value} />
+                </Grid>
+              ))
+
+              :
+
+              data ?
+                data.map((value, index) => (
+                  <Grid item xs={12} sm={4} md={3} key={value._id}>
+                    <ItemCard data={value} />
+                  </Grid>
+                ))
+                :
+                "not thing is there"
+            :
+
+            <Grid item xs={12} sm={8} md={8} key={value._id}>
+              <Typography color="primary" sx={{ fontSize: '40px', letterSpacing: '4px', fontWeight: '900', textAlign: 'center' }}>Welcome to <strong>MESSWALA</strong> </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '38vh' }}>
+                <PriorityHighIcon color="primary" sx={{ fontSize: 30 }} />
+                <Typography color="primary" sx={{ fontSize: '20px', letterSpacing: '4px', fontWeight: '700', textAlign: 'center' }}>No menus available..,checkout after 12 PM or 7PM.</Typography>
+              </Box>
+            </Grid>
+        }
+      </Grid>
+
+      {
+        messDataItem.length !== 0 &&
+          filter ? "" : <Stack spacing={2} sx={{ display: 'grid', justifyContent: 'center', py: 3 }}>
+          <Pagination count={PageCount} page={page} onChange={handlePageChange} color="primary" size="large" />
+        </Stack>
       }
+
       <Count />
 
     </>
