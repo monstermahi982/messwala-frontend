@@ -27,6 +27,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import CardActions from '@mui/material/CardActions';
 import { setCookies, getCookie, removeCookies } from 'cookies-next';
 import Link from 'next/link'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -94,7 +96,19 @@ export default function Home({ messDataItem, dish_item }) {
               {
                 refer && name ? "" :
                   <>
-                    <Autocomplete
+                    <Box sx={{ border: 3, borderColor: 'primary.main', boxShadow: 3 }}>
+                      <Typography sx={{ textAlign: 'center', py: 1, letterSpacing: 3, fontWeight: '900' }}>EVENT :- Free 1 Meal</Typography>
+                      <Typography sx={{ py: 1, mx: 3, my: 1 }}>Create your account and send your Refer Id to your Friends.</Typography>
+                    </Box>
+                    <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly', mt: 2 }}>
+                      <Link href={"/referral"} passHref><Button variant="outlined" aria-label="view">
+                        <AccountTreeIcon sx={{ color: 'red' }} />
+                      </Button></Link>
+                      <Link href={"/auth/register"} passHref><Button variant="outlined" aria-label="view">
+                        <AccountCircleIcon sx={{ color: 'primary.main' }} />
+                      </Button></Link>
+                    </CardActions>
+                    {/* <Autocomplete
                       sx={{ mb: 1, width: '100%' }}
                       multiple
                       id="checkboxes-tags-demo"
@@ -142,7 +156,7 @@ export default function Home({ messDataItem, dish_item }) {
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                       <Button disabled size="small" variant="contained" onClick={() => setLoad(true)}>Comming Soon</Button>
-                    </Box>
+                    </Box> */}
                   </>
               }
 
@@ -152,7 +166,11 @@ export default function Home({ messDataItem, dish_item }) {
               refer && name
                 ?
                 <>
-                  <Typography sx={{ textAlign: 'center', py: 1, mx: 3, my: 1, border: 3, borderColor: 'primary.main', boxShadow: 3 }}>Refer Id :- {refer}</Typography>
+                  {/* <Typography sx={{ textAlign: 'center', py: 1, mx: 3, my: 1, border: 3, borderColor: 'primary.main', boxShadow: 3 }}>Refer Id :- {refer}</Typography> */}
+                  <Box sx={{ border: 3, borderColor: 'primary.main', boxShadow: 3, mx: 1 }}>
+                    <Typography sx={{ textAlign: 'center', py: 1, letterSpacing: 3, fontWeight: '900' }}>EVENT :- Free 1 Meal</Typography>
+                    <Typography sx={{ textAlign: 'center', py: 1, mx: 3, my: 1 }}>Your Refer Id :- {refer}</Typography>
+                  </Box>
                   <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <TwitterShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} hashtags={['messwala', 'referral messwala', 'joinmesswala', 'OnlineMenu']}>
                       <TwitterIcon size={20} round={true} />
@@ -164,7 +182,7 @@ export default function Home({ messDataItem, dish_item }) {
                       <WhatsappIcon size={20} round={true} />
                     </WhatsappShareButton>
                     <Link href={"/referral"} passHref><Button variant="outlined" aria-label="view">
-                      <VisibilityIcon sx={{ color: 'red' }} />
+                      <AccountTreeIcon sx={{ color: 'red' }} />
                     </Button></Link>
                   </CardActions>
 
