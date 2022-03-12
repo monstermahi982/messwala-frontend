@@ -99,16 +99,9 @@ const ItemCard = ({ data }) => {
                 </CardContent>
                 <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <Box sx={{ display: 'flex' }}>
-                        <InsertEmoticonIcon sx={{ color: 'green' }} />
-                        <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.like_count}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex' }}>
-                        <VisibilityIcon sx={{ color: 'red' }} />
+                        <VisibilityIcon color="error" />
                         <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
                     </Box>
-                    <TwitterShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} hashtags={['messwala', 'sunnymess', 'OnlineMenu']}>
-                        <TwitterIcon size={20} round={true} />
-                    </TwitterShareButton>
                     <TelegramShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
                         <TelegramIcon size={20} round={true} />
                     </TelegramShareButton>
