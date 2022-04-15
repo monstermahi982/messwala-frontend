@@ -28,6 +28,7 @@
     "react-google-login": "^5.2.2",
     "react-share": "^4.4.0",
     "react-swipeable-views": "^0.14.0",
+    "react-top-loading-bar": "^2.1.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

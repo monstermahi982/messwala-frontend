@@ -29,6 +29,7 @@ import { setCookies, getCookie, removeCookies } from 'cookies-next';
 import Link from 'next/link'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import Youtube from '../components/Youtube';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -233,6 +234,8 @@ export default function Home({ messDataItem, dish_item }) {
           <Pagination count={PageCount} page={page} onChange={handlePageChange} color="primary" size="large" />
         </Stack>
       }
+
+      <Youtube />
 
       <Count />
 
