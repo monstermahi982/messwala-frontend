@@ -20,6 +20,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import HomeIcon from '@mui/icons-material/Home';
+import LoadingBar from 'react-top-loading-bar'
 
 function MyApp({ Component, pageProps }) {
 
@@ -29,6 +30,15 @@ function MyApp({ Component, pageProps }) {
     bottom: false,
     right: false,
   });
+  const [progress, setProgress] = React.useState(0)
+  React.useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setProgress(30)
+    })
+    router.events.on('routeChangeComplete', () => {
+      setProgress(100)
+    })
+  })
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -74,6 +84,13 @@ function MyApp({ Component, pageProps }) {
   if (router.pathname === '/auth/register') {
     return (
       <>
+        <LoadingBar
+          color='#f11946'
+          height={3}
+          waitingTime={300}
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Component {...pageProps} />
         <SwipeableDrawer
           anchor={'top'}
@@ -93,6 +110,13 @@ function MyApp({ Component, pageProps }) {
   if (router.pathname === '/auth/owner-login') {
     return (
       <>
+        <LoadingBar
+          color='#f11946'
+          height={3}
+          waitingTime={300}
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Component {...pageProps} />
         <SwipeableDrawer
           anchor={'top'}
@@ -112,6 +136,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <LoadingBar
+        color='#f11946'
+        height={3}
+        waitingTime={300}
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <Navbar />
       <Component {...pageProps} />
       <SwipeableDrawer
