@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import { checkCookies, getCookie, removeCookies } from 'cookies-next';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Button from '@mui/material/Button';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -102,6 +103,11 @@ const ItemCard = ({ data }) => {
                         <VisibilityIcon color="error" />
                         <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
                     </Box>
+                    <Link href={`https://www.google.com/maps/dir/?api=1&destination=${data.google_location}`} passHref><a target={"_blank"}>
+                        <IconButton color="primary">
+                            <DirectionsIcon />
+                        </IconButton>
+                    </a></Link>
                     <TelegramShareButton url={`https://www.messwala.online/${data.slug}`} title={`Todays ${data.mess_name} menu ${data.menu_list.length && data.menu_list.map((value, index) => (value.dish_name + ", "))} and more..., checkout full menu on MESSWALA App`}>
                         <TelegramIcon size={20} round={true} />
                     </TelegramShareButton>
