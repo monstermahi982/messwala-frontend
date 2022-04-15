@@ -86,7 +86,7 @@ export default function Home({ messDataItem, dish_item }) {
 
       <Grid container spacing={2} sx={{ p: 2 }}>
         <Grid item xs={12} sm={4} md={3}>
-          <Card sx={{ Width: '100%' }}>
+          <Card sx={{ Width: '100%', boxShadow: 10 }}>
             <CardHeader
               sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 'h6.fontSize', m: 0, p: 0, pt: 2 }}
               title="Filter"
@@ -172,7 +172,7 @@ export default function Home({ messDataItem, dish_item }) {
                     <Typography sx={{ textAlign: 'center', py: 1, letterSpacing: 3, fontWeight: '900' }}>EVENT :- Free 1 Meal</Typography>
                     <Typography sx={{ textAlign: 'center', py: 1, mx: 3, my: 1 }}>Your Refer Id :- {refer}</Typography>
                   </Box>
-                  <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                  <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly', borderTop: 1, borderColor: '#1976d2' }}>
                     <TwitterShareButton url={`https://www.messwala.online/auth/register?refer_id=${refer}`} title={`Hello ${name} here, join me on MESSWALA.`} hashtags={['messwala', 'referral messwala', 'joinmesswala', 'OnlineMenu']}>
                       <TwitterIcon size={20} round={true} />
                     </TwitterShareButton>

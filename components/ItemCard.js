@@ -61,7 +61,7 @@ const ItemCard = ({ data }) => {
                     {snackAlert.message}
                 </Alert>
             </Snackbar>
-            <Card sx={{ Width: '100%' }}>
+            <Card sx={{ Width: '100%', boxShadow: 10 }}>
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: blue[700] }} aria-label="recipe">
@@ -84,20 +84,20 @@ const ItemCard = ({ data }) => {
                         {
                             data.menu_list.length === 0 ?
                                 <>
-                                    <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>no item available...</Typography>
+                                    <Typography sx={{ textAlign: 'center', fontWeight: 'light', fontSize: '15px', mx: 1, letterSpacing: '2px' }}>No item mentioned</Typography>
                                 </>
                                 :
                                 data.menu_list.map((value, index) => (
                                     <Box key={index}>
-                                        <Chip label={value.dish_name} variant="outlined" size="small" sx={{ my: 1 }} />
+                                        <Chip label={value.dish_name} variant="outlined" size="small" sx={{ my: 1, backgroundColor: '#1976d2', color: '#fff', boxShadow: 5, border: 0 }} />
                                     </Box>
 
                                 ))
                         }
-                        <Chip label="more" variant="outlined" size="small" sx={{ my: 1 }} />
+                        <Chip onClick={() => showMenu(data.slug)} label="more" variant="outlined" size="small" sx={{ my: 1, backgroundColor: '#1976d2', color: '#fff', boxShadow: 5, border: 0 }} />
                     </Stack>
                 </CardContent>
-                <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-evenly', borderTop: 1, borderColor: '#1976d2' }}>
                     <Box sx={{ display: 'flex' }}>
                         <VisibilityIcon color="error" />
                         <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
@@ -108,8 +108,8 @@ const ItemCard = ({ data }) => {
                     <WhatsappShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
                         <WhatsappIcon size={20} round={true} />
                     </WhatsappShareButton>
-                    <Button variant="outlined" aria-label="like" onClick={() => showMenu(data.slug)}>
-                        <MenuBookIcon sx={{ color: 'blue', fontSize: '30px' }} />
+                    <Button variant="contained" aria-label="like" onClick={() => showMenu(data.slug)}>
+                        <MenuBookIcon sx={{ color: '#fff', fontSize: '18px' }} />
                     </Button>
                 </CardActions>
             </Card>
