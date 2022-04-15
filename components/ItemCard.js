@@ -102,10 +102,10 @@ const ItemCard = ({ data }) => {
                         <VisibilityIcon color="error" />
                         <Typography sx={{ fontWeight: 'light', fontSize: '12px', ml: 1 }}>{data.views}</Typography>
                     </Box>
-                    <TelegramShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`}>
+                    <TelegramShareButton url={`https://www.messwala.online/${data.slug}`} title={`Todays ${data.mess_name} menu ${data.menu_list.length && data.menu_list.map((value, index) => (value.dish_name + ", "))} and more..., checkout full menu on MESSWALA App`}>
                         <TelegramIcon size={20} round={true} />
                     </TelegramShareButton>
-                    <WhatsappShareButton url={`https://www.messwala.online/${data.slug}`} title={`Checkout todays menu of ${data.mess_name}.`} >
+                    <WhatsappShareButton url={`https://www.messwala.online/${data.slug}`} title={`Todays ${data.mess_name} menu ${data.menu_list.length && data.menu_list.map((value, index) => (value.dish_name + ", "))} and more..., checkout full menu on MESSWALA App`} >
                         <WhatsappIcon size={20} round={true} />
                     </WhatsappShareButton>
                     <Button variant="contained" aria-label="like" onClick={() => showMenu(data.slug)}>
