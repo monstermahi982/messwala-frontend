@@ -18,21 +18,21 @@ const Count = () => {
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <GroupAddIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={65} />
+                        <CountUp duration={10} end={75} />
                     </Typography>
                     <Typography>Total Users</Typography>
                 </Paper>
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <MenuBookIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={6} />
+                        <CountUp duration={10} end={9} />
                     </Typography>
                     <Typography>Total Messes</Typography>
                 </Paper>
                 <Paper elevation={0} sx={{ p: 2, borderRadius: '25%' }}>
                     <VisibilityIcon color="primary" fontSize="small" />
                     <Typography sx={{ fontSize: '25px' }}>
-                        <CountUp duration={10} end={423} />
+                        <CountUp duration={10} end={670} />
                     </Typography>
                     <Typography>Daily Views</Typography>
                 </Paper>
