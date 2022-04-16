@@ -88,6 +88,12 @@ const Navbar = () => {
                     {alertMessage.message}
                 </Alert>
             </Snackbar>
+            {/* google auto sign */}
+            <div id="g_id_onload"
+                data-client_id={process.env.NEXT_PUBLIC_GOOGLE_URL}
+                data-auto_select={true}
+                data-login_uri="https://www.messwala.online/">
+            </div>
             <Box sx={{ flexGrow: 1, mb: 8 }}>
                 <AppBar position="fixed">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
